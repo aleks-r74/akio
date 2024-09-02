@@ -1,0 +1,43 @@
+<nav class="navbar is-info is-fixed-top" role="navigation" >
+    <div class="navbar-brand">
+      <button class="navbar-item has-text-weight-bold has-text-light" (click)="changeLang()" >AKIO</button>
+      <a role="button" (click)="onBurgerClick()" class="navbar-burger" aria-label="menu" aria-expanded="true" data-target="mainMenu" [class.is-hidden]="!authService.isAuthenticated()">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+  
+    <div id="mainMenu" class="navbar-menu" [class.is-active]="menuActive" (click)="this.menuActive=false">
+        <div class="navbar-start">
+          @if(authService.isAuthenticated()){
+            @for(link of links; track link){
+              <!--Here we check for user access level-->
+              @if(link.access_level <= authService.getAccessLevel()){
+                <a class="navbar-item has-text-light" 
+                    routerLinkActive="'has-background-light has-text-dark'"
+                    [routerLink]="link.url"     
+                    (click)="onBurgerClick()"
+                >
+                    {{link.text  | translate}}
+                </a>
+              }
+            }
+          }
+        </div>
+        <div class="navbar-end">
+          <div class="buttons">
+            @if(authService.isAuthenticated()){
+              <button class="button is-small mx-2 is-info has-text-white is-hidden-touch" (click)="logout()" alt="Log out">
+                <span>Exit</span>
+                <span class="icon is-small">
+                  <i class="fas fa-sign-out-alt"></i>
+                </span>
+              </button>
+              <a class="navbar-item has-text-light is-hidden-desktop" (click)="logout()" alt="Log out">{{'Exit'|translate}}</a>
+            }
+          </div>
+        </div>
+    </div>
+  </nav>

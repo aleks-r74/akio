@@ -1,0 +1,10 @@
+div{
+    min-height: 35px;
+}
+span{
+   min-width: 90px;
+}
+.highlighted{
+    border-color: rgb(150 223 190);
+    border-bottom-width:  5px;
+}

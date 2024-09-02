@@ -1,0 +1,20 @@
+@if(containers){
+    <div class="is-flex is-justify-content-center ">
+        <div class="field is-grouped is-grouped-multiline is-justify-content-center">
+            @for(container of containers; track $index){
+            <button>
+                <span class="icon">
+                    <i class="fa-solid fa-angles-down mx-1" [class.is-invisible]="!checkInFlow(container.containerName)"></i>
+                    <i class="fa-solid fa-angles-up mx-1" [class.is-invisible]="!checkOutFlow(container.containerName)"></i>                   
+                  </span>
+                <table class="has-background-success-95 fixed-width-tag has-text-centered is-size-6" (click)="onContainerClick(container)"
+                [ngClass]="{'has-background-success-95': container!=selected, 'has-background-success-75': container==selected}"
+                >
+                    <tr><td class="is-capitalized has-text-weight-bold">{{container.containerName}}</td></tr>
+                    <tr><td>{{container.balance}}</td></tr>
+                </table>
+            </button>
+            }
+        </div>
+    </div>
+}

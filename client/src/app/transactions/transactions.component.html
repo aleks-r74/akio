@@ -1,0 +1,29 @@
+<div class="is-flex is-justify-content-center mt-1" [class.is-invisible]="!requestFlag"> 
+    @if(!errors()){
+        <p>{{'Loading'|translate}} ...</p>
+    } @else {
+        <app-error [error]="errors()"/>
+    }
+</div>
+
+<div class="container is-max-tablet">
+<app-date-between (dates)="onDatesSelected($event)"/>
+</div>
+<div class="container is-max-tablet">
+    <div class="columns is-desktop is-centered">
+    @if(response?.count && response?.count){
+        <div class="column is-narrow is-offset-1-desktop">
+            <app-transactions-table [httpResponse]="response" [employeeList]="employees" (transactionUpd)="onEmployeeSet($event)" (pageSelected)="onPageSelected($event)"/>
+        </div>
+        @if(authService.getAccessLevel()>1){
+            <div class="column is-narrow">
+                <app-employee-total [employeeCalcs]="emloyeeCalcs" (saveClick)="saveTransactions()" (resetClick)="onResetClick()"/>
+            </div>
+            }
+    } @else {
+        <div class="is-flex is-justify-content-center mt-1">
+            <p>No data for this period</p>
+        </div>
+    }
+    </div>
+</div>

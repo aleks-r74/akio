@@ -1,0 +1,33 @@
+@if(summary?.length!>0){
+
+<table class="table is-size-7 has-text-centered is-hoverable is-striped">
+    <thead>
+        <tr>
+            <th class="has-text-centered ">{{'Last transaction'|translate}}</th>
+            <th class="has-text-centered ">{{'Initiator'|translate}}</th>
+            <th class="has-text-centered ">{{'Source'|translate}}</th>
+            <th class="has-text-centered ">{{'Dest'|translate}}</th>
+            <th class="has-text-centered ">{{'Total'|translate}}</th>
+            @if(showCancel){
+                <th class="has-text-centered ">{{'Cancel'|translate}}</th> 
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @for(s of summary; track $index){
+        <tr>
+            <td>{{s.time_stamp| date:'MMMM d, HH:mm' }}</td>
+            <td> {{s.initiator}}</td>
+            <td>{{s.source | titlecase}}</td>
+            <td>{{s.dest | titlecase}}</td>
+            <td>{{s.amount}}</td>
+            @if(showCancel){ 
+                <td><a class="tag is-danger" [class.is-hidden]="$index!=0" (click)="onCancel(s.receipt_num!)"> {{'Cancel'|translate}}</a></td>
+            }
+        </tr>
+        }
+    </tbody> 
+</table>
+} @else {
+    <p class="box"> {{'There are no user\'s transactions today'|translate}}</p>
+}

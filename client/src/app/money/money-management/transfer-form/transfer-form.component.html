@@ -1,0 +1,29 @@
+@if(sources.length && dests.length){ 
+  <div class="container is-max-tablet ">
+    <div class="m-1 is-flex is-justify-content-center">
+        <form [formGroup]="transferForm" (ngSubmit)="onSubmit()"> 
+            <div class="field has-addons">
+                <ng-container formGroupName="direction">
+                <p class="control">
+                        <app-select [control]="sourceControl" firstOption="From" [options]="sources"/>
+                    </p>
+                    <p class="control">
+                        <app-select [control]="destControl" firstOption="To" [options]="dests"/>
+                    </p>
+                </ng-container>
+                <p class="control">
+                  <input class="input is-size-7-touch" type="number" placeholder="{{'Amount'|translate}}"  min="0.5" formControlName="amount">
+                </p>
+                <p class="control">
+                    <input class="input is-size-7-touch" type="text" placeholder="{{'Description'|translate}}" formControlName="descr" maxlength="100" >
+                  </p>
+                <p class="control">
+                  <button class="button is-info is-size-7-touch" type="submit" [disabled]="!transferForm.valid">
+                    {{'Transfer'|translate}}
+                  </button>
+                </p>
+            </div>
+        </form>
+    </div>
+  </div>
+}

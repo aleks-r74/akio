@@ -1,0 +1,32 @@
+<app-add-new (addNew)="onAddNew()"/>
+
+<div class="is-flex is-justify-content-center mt-1 min-height"> 
+    @if(!errorResponse && requestFlag){
+        <p>{{'Loading'|translate}} ...</p>
+    } 
+    @if(passUpdated){
+        <p>{{'Password updated'|translate}}</p>
+    } 
+    <app-error [error]="errorResponse"/>
+</div>
+
+
+<app-add-new-form 
+        [authorities]="authorities"
+        (close)="onAddNewClose($event)"
+        [showWindow]="modalAddNewVisible"
+/>
+
+<app-user-table [users]="users" (changePass)="onPassIconClick($event)" (delete)="onDeleteIconClick($event)"/>
+
+<app-modal (close)="modalChangePswVisible=false" [active]="modalChangePswVisible">
+    <app-confirmation title="{{'Changing password for'|translate}} {{selectedUser}}" (confirmed)="onPassChangeConfirm($event)">
+            <input class="input m-1" type="text" placeholder="{{'New password'|translate}}" #pswInput/>
+    </app-confirmation>
+</app-modal>
+
+<app-modal (close)="modalDeleteVisible=false" [active]="modalDeleteVisible">
+    <app-confirmation title="{{'Do you want to delete'|translate}} {{selectedUser}}?" (confirmed)="onDeleteConfirm($event)">
+        <div>{{'After you click confirm user will be deleted'|translate}}</div>
+    </app-confirmation>
+</app-modal>

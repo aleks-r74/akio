@@ -1,0 +1,33 @@
+<nav class="pagination is-small" role="navigation" aria-label="pagination" [class.is-invisible]="totalPages==1">
+     <ul class="pagination-list">
+        <li>
+            <a class="pagination-link" (mousedown)="movePages(-1)" (mouseup)="stopTimer()" [class.is-disabled]="totalPages<=3">
+                <span><<</span>
+            </a>
+        </li>
+        <li>
+            <a class="pagination-link"  (click)="onPageClick(pageRange)" 
+            [ngClass]="{'is-disabled':totalPages==1, 'is-selected':currentPage===pageRange}" >
+                <span>{{pageRange}}</span>
+            </a>
+        </li>
+
+        <li>
+            <a
+            class="pagination-link" (click)="onPageClick(pageRange+1)" [ngClass]="{'is-disabled':totalPages==1, 'is-selected':currentPage===pageRange+1}"
+            aria-current="page">{{pageRange+1}}</a
+            >
+        </li>
+        <li>
+            <a class="pagination-link" (click)="onPageClick(pageRange+2)" 
+                [ngClass]="{'is-disabled':totalPages<3, 'is-selected':currentPage===pageRange+2}">
+                <span>{{pageRange+2}} </span> 
+            </a>
+        </li>
+        <li>
+            <a class="pagination-link" [ngClass]="{'is-disabled':totalPages<=3}" (mousedown)="movePages(1)" (mouseup)="stopTimer()">
+                <span>>></span>
+            </a>
+        </li>
+    </ul>
+</nav>

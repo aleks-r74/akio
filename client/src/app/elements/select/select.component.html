@@ -1,0 +1,11 @@
+<span class="select is-size-7-touch" >
+    <select [formControl]="control">
+        @for(val of upperCaseOptions; track val){
+             @if($first){
+                <option>{{firstOption}}</option>
+            }
+            <option>{{val}}</option>
+        }
+    </select>
+</span>
+

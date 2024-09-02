@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="is-flex is-justify-content-center m-3">
+        <div class="field has-addons" >
+            <p class="control">
+             <button class="button is-danger is-outlined is-rounded" style="width:100px;" (click)="onAdd()">{{'Add new'|translate}}</button>
+             </p>
+              <p class="control">
+                <button class="button is-danger is-outlined is-rounded" style="width:100px;" [disabled]="!formGroup.valid" (click)="onSave()">{{'Save All'|translate}}</button>
+             </p>
+         </div>
+    </div>
+
+    <div class="is-flex is-justify-content-center m-0 min-height is-size-7">
+        @if(requestFlag){
+            @if(errorResponse){
+                <app-error [error]="errorResponse"/>
+            }@else{
+                <p>{{'Loading'|translate}}...</p>
+            }
+        }
+    </div>
+
+    <div class="is-size-7 m-2 is-flex is-justify-content-center">
+          <form  [formGroup]="formGroup"> 
+             <ng-component formArrayName="expenses">
+                  @for(expense of expensesArray.controls; track $index){
+                    <div class="field has-addons" [id]="$index">
+                        <p class="control">
+                               <app-select [options]="options" firstOption="From" [control]="getControl(expense, 'source')"/>
+                        </p>
+                        <p class="control">
+                            <app-select [options]="options" firstOption="To" [control]="getControl(expense, 'dest')"/>
+                        </p>
+                        <p class="control">
+                            <input class="input is-size-7-touch" type="number" placeholder="{{'Amount'|translate}}" min="0.5" [formControl]="getControl(expense, 'amount')" style="max-width:100px"/>
+                        </p>
+                        <p class="control">
+                            <input class="input is-size-7-touch" type="number" placeholder="{{'Due day'|translate}}"  min="1" max="31" [formControl]="getControl(expense, 'due_day')"/>
+                        </p>
+                        <p class="control">
+                             <input class="input is-size-7-touch" type="number" step="0.001" min="0" max="100" placeholder="{{'Percentage'|translate}}"  [formControl]="getControl(expense, 'percent')"/>
+                        </p>
+                        <p class="control">
+                            <input class="input is-size-7-touch" type="text" placeholder="{{'Description'|translate}}" [formControl]="getControl(expense, 'descr')" maxlength="100" />
+                        </p>
+                        <p class="control">
+                            <button class="button has-background-danger-60 is-size-7-touch" (click)="onDelete($index)"> X </button>
+                        </p>
+                    </div>
+                    }
+                </ng-component>
+            </form>
+        </div>
+</div>

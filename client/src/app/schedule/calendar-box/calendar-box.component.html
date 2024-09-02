@@ -1,0 +1,25 @@
+<div class="is-flex is-justify-content-center">
+    <div class="box m-0 p-0 has-text-centered background" [style]="imageStyle" [class.disabled]="readOnly">
+        <div class="pacifico-small is-flex is-justify-content-center my-1 p-0">{{month|translate}}</div>
+        <div class="pacifico-big lifted is-flex is-justify-content-center m-0 p-0">{{day}}</div>
+        @for(employee of scheduleDisplay.employees; track $index){
+            @if(authService.getAccessLevel()>1){
+                <button class="button tag is-small mx-1 my-0 lifted" 
+                [ngClass]="{
+                    'is-grey is-dark': readOnly, 
+                    'is-light': !employee.scheduled, 
+                    'is-link is-hoverable': !readOnly}"
+                (click)="onEmployeeClick(employee)"
+                >
+                {{employee.name}}
+                </button>
+            } @else {
+                <button class="button tag is-small mx-1 my-0 lifted" [class.is-link]="employee.scheduled">
+                {{employee.name}}
+                </button>
+            }
+
+        }
+        
+    </div>
+</div>

@@ -1,0 +1,62 @@
+<div class="container is-max-tablet">
+    <div class="is-flex is-justify-content-center">
+        <table class="table is-hoverable is-striped is-narrow-mobile has-text-centered is-size-7-mobile is-size-6 my-2 mx-0 px-0 is-fullwidth">
+            <thead>
+                <tr >
+                    <td colspan="5" class="m-0 p-0">
+                        <div class="is-flex is-justify-content-center mb-1">
+                            @if(currentPage && totalPages){
+                                <app-pagination [currentPage]="currentPage" [totalPages]="totalPages" (pageSelected)="onPageNumClick($event)"/>
+                            }
+                        </div>
+                    </td>
+                </tr>
+                <tr class="has-background-danger-95">
+                <th class="has-text-centered ">{{'Time'|translate}}</th>
+                <th class="has-text-centered ">{{'Receipt'|translate}}</th>
+                <th class="has-text-centered ">{{'Paid'|translate}}</th>
+                <th class="has-text-centered ">{{'Services'|translate}}</th>
+                <th class="has-text-centered ">{{'Employee'|translate}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(transaction of httpResponse?.transactionsOnThePage; track $index){
+                    <tr>
+                        <td class="has-text-centered is-vcentered ">{{transaction.date_time | date: 'MMM dd HH:mm'}}</td>
+                        <td class="has-text-centered is-vcentered ">{{transaction.receipt_num}}</td>
+                        <td class="has-text-centered is-vcentered ">{{transaction.money_accepted}}</td>
+                        <td class="has-text-left" (click)="onTransactionClick(transaction)">
+                            <div>{{transaction.services | transactionServicesPipe}}</div>
+                        </td>
+                        <td class="p-1 is-vcentered">
+                                <div class="tags is-centered">
+                                    @if((!transaction.readonly) && authService.getAccessLevel()>1){
+                                        @for(employee of employeeList; track $index){
+                                            <button class="tag is-hoverable"
+                                            [class.is-info]="transaction.employee===employee"
+                                            (click)="onEmployeeSelected(transaction, employee)"
+                                            >{{employee}}</button>
+                                        }
+                                    } @else {
+                                        <button class="tag is-info">
+                                            {{ (transaction.employee ? transaction.employee : 'Not assigned')|translate }}
+                                        </button>
+                                    }
+                                </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                    <tr class="has-background-info-95">
+                    <td></td>
+                    <td class="has-text-centered has-text-weight-bold">{{httpResponse?.transactionsOnThePage?.length}}/{{httpResponse?.count}}</td>
+                    <td class="has-text-centered has-text-weight-bold">{{httpResponse?.pageSum}}/{{httpResponse?.sum}}</td>
+                    <td class="has-text-centered has-text-weight-bold">{{'Page'|translate}} {{httpResponse?.currentPage!+1}} / {{httpResponse?.totalPages}}</td>
+                    <td></td>
+                    </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+<app-transaction-details [active]="showDetails" [transaction]="transactionDetails" (close)="onCloseTransactionDetails($event)"/> 

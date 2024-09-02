@@ -1,0 +1,13 @@
+<div class="is-flex-touch is-justify-content-center is-align-items-center">
+@for(employee of employeeCalcs; track $index){
+    <span class="tags has-addons is-centered m-0 pb-1 fixed-width-tag" [class.mt-responsive]="!$first && screenSize>500">
+        <span class="tag is-info" style="width:50%">{{employee.name}}:</span>
+        <span class="tag is-light has-text-weight-semibold" style="width:50%">{{employee.sum}}</span>
+    </span>
+}
+</div>
+<div class="container is-flex-touch is-justify-content-center is-align-items-center">
+    <div class="mb-1 mx-1"><button class="button tag is-hoverable is-danger" (click)="onResetClick()" style="width: 100%">{{'Reset'|translate}}</button></div>
+    <div class="mb-1 mx-1"><button class="button tag is-hoverable is-primary"(click)="onSaveClick()" style="width: 100%">{{'Save'|translate}}</button></div>
+</div>
+     

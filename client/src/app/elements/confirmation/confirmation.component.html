@@ -1,0 +1,14 @@
+<article class="message" >
+    <div class="message-header">
+      <p>{{title}}</p>
+    </div>
+    <div class="message-body is-size-7-touch">
+        <ng-content>
+        </ng-content>
+        <div class="is-flex is-justify-content-end my-2">
+            <button class="button m-1 is-info is-light" [disabled]="disabled" (click)="onConfirm(true)">{{'Confirm'|translate}}</button>
+            <button class="button m-1 is-info" (click)="onConfirm(false)">{{'Cancel'|translate}}</button>
+        </div>
+        
+    </div>
+  </article>

@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="is-flex is-justify-content-center m-3">
+        <div class="field has-addons" >
+            <p class="control">
+             <button class="button is-danger is-outlined is-rounded" style="width:100px;" (click)="addNewDatePrice()">{{'Add new'|translate}}</button>
+             </p>
+              <p class="control">
+                <button class="button is-danger is-outlined is-rounded" style="width:100px;"  (click)="onSaveAll()" [disabled]="!formGroup.valid">{{'Save All'|translate}}</button>
+             </p>
+         </div>
+    </div>
+
+    <div class="has-text-centered">
+        <p>Prices for 6th haircuts will be applied for salary calculation starting from the date specified</p>
+    </div>
+    <div class="is-flex is-justify-content-center m-0 min-height is-size-7 min-height">
+        @if(requestFlag){
+            @if(errorResponse){
+                <app-error [error]="errorResponse"/>
+            }@else{
+                <p>Loading...</p>
+            }
+        }
+    </div>
+    <div class="is-flex is-justify-content-center  m-3">
+        <form [formGroup]="formGroup">
+            <ng-component formArrayName="datePriceArray">
+                @for(datePrice of datePriceArray.controls; track $index){
+                    <div class="field has-addons">
+                        <p class="control">   
+                            <input class="input" type="datetime-local" [formControl]="getControl(datePrice, 'date')"> 
+                        </p>
+                        <p class="control">   
+                            <input class="input" type="number" placeholder="Price" min="0.5" [formControl]="getControl(datePrice, 'price')"/>
+                        </p>
+                        <p class="control">
+                            <button class="button has-background-danger-60" (click)="onDelete($index)"> X </button>
+                        </p>  
+                    </div>
+                }
+            </ng-component>
+        </form>
+    </div>
+</div>
+

@@ -1,0 +1,5 @@
+.fixed-width-tag {
+    min-width: 90px;
+    white-space: nowrap;
+    border-radius: 10px;
+  }

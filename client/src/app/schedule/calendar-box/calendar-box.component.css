@@ -1,0 +1,35 @@
+  .pacifico-big {
+    font-family: "Pacifico", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 2.5rem;
+    color: white;
+  }
+
+  .pacifico-small {
+    font-family: "Pacifico", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.5rem;
+    color: white;
+  }
+
+  
+  .lifted{
+    position: relative;
+    top: -15px;
+  }
+
+  .background {
+    background-size: cover; 
+    background-position: center; 
+    opacity: 0.9;
+    width: 95%; 
+    height: 95%;    
+    max-width: 160px;
+    max-height: 160px;
+  }
+  .disabled{
+    filter: brightness(0.5);
+  }
+ 

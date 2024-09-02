@@ -1,0 +1,29 @@
+<div class="container is-max-tablet my-2">
+    <div class="columns is-centered">
+        <div class="column is-narrow">
+            <div class="field has-addons is-justify-content-center">
+                <p class="control">
+                    <a class="button is-static min-width is-size-7-touch">{{'From'|translate}}:</a>
+                </p>
+                <p class="control">
+                    <input type="datetime-local" id="fromDateTime" class="input is-size-7-touch" (change)="onDateChange($event)" [value]="fromDateTime">
+                </p>
+            </div>
+        </div>
+
+        <div class="column is-narrow">
+            <div class="field has-addons is-justify-content-center">
+                <p class="control">
+                    <a class="button is-static min-width is-size-7-touch">{{'To'|translate}}:</a>
+                </p>
+                <p class="control">
+                    <input type="datetime-local" id="toDateTime" class="input is-size-7-touch" (change)="onDateChange($event)" [value]="toDateTime">
+                </p>
+            </div>
+        </div>
+
+        <div class="column is-narrow has-text-centered">
+            <button class="button is-size-7-touch" (click)="emitDates()">{{'Show'|translate}}</button>
+        </div>   
+    </div> 
+</div>

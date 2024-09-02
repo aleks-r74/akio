@@ -1,0 +1,11 @@
+<div class="modal" [class.is-active]="active">
+    <div class="modal-background" (click)="closeDetails()"></div>
+    <div class="modal-content  is-flex is-justify-content-center" style="min-width: 100%;">
+        <div class="box m-1 p-1 " >
+            <div class="table-container">
+                <ng-content></ng-content>
+            </div>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close" (click)="closeDetails()"></button>
+</div>

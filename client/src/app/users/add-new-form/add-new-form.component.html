@@ -1,0 +1,18 @@
+<app-modal (close)="showWindow=false" [active]="showWindow">
+    <app-confirmation title="{{'Create new user'|translate}}" (confirmed)="onConfirmClick($event)" [disabled]="newUserForm.invalid">
+        <form [formGroup]="newUserForm">
+            <input class="input m-1 is-size-7-touch" type="text" placeholder="{{'Username'|translate}}" formControlName="username"/>
+            <input class="input m-1 is-size-7-touch" type="text" placeholder="{{'Password'|translate}}" formControlName="password"/>
+            <div class="checkboxes is-flex is-justify-content-space-between" formArrayName="checkboxes">
+                @for(checkbox of checkboxes.controls; track $index){
+                    <label class="checkbox mx-1">
+                        <input type="checkbox"  [formControlName] ="$index" />
+                        {{checkbox.name | titlecase}}
+                    </label>
+                }
+            </div>
+        </form>
+    </app-confirmation>
+</app-modal>
+
+

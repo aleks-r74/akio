@@ -1,0 +1,57 @@
+.delta {
+    position: absolute;
+    bottom: -0.8em;
+    right: 10%;   
+    color: rgb(0, 0, 0);
+    border-radius: 25%;
+    padding: 0px 4px;
+    font-size: 0.9em;
+    font-weight: bold;
+    opacity: 90%;
+  }
+  
+  td {
+    position: relative;
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  @media(max-width: 1024px){
+    tr{
+        height: 35px;
+      }
+  }
+
+  .table.is-striped th {
+    text-align: center;
+  }
+
+  @media(min-width: 1023px){
+    tr{
+        height: 45px;
+      }
+  }
+
+  .positive {
+    background-color: #7cff77b0; 
+  }
+  
+  .negative {
+    background-color: #ff6e6ea1; 
+  }
+  
+  
+.table-container {
+    position: relative;
+    max-height: 350px;
+    overflow-y: auto;
+}
+    
+table thead, table tfoot {
+    position: sticky;
+    z-index: 2; 
+}
+    
+thead {
+    top: 0;
+}

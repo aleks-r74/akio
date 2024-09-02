@@ -1,0 +1,15 @@
+@if(error()){
+<div class="is-size-7 error">
+    @if(error()?.error?.message){
+        <p>{{error()?.error.message}}</p>
+    } @else {
+        <p>{{error()?.message}}</p>
+        @if(error()?.status){
+            <p>HTTP Status Code: {{error()?.status}}</p>
+        }
+    }
+</div>
+} 
+
+
+

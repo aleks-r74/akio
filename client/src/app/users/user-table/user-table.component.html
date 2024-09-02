@@ -1,0 +1,27 @@
+<div class="is-size-5 is-size-7-touch is-flex is-justify-content-center mt-0">
+    <table class="table has-text-centered">
+        <tr>
+            <td>{{'Username'|translate}}</td>
+            <td>{{'Authorities'|translate}}</td>
+            <td>{{'Actions'|translate}}</td>
+        </tr> 
+            @for(user of users; track $index){
+            <tr class="is-size-6 is-size-7-touch">
+                <td class="is-vcentered">{{user.username}}</td>
+                <td>
+                    @for(auth of user.authorities; track $index){
+                        <span class="tag is-primary fixed-width-tag m-1">{{auth | titlecase}}</span>
+                    }
+                </td>
+                <td >
+                    <span class="tag icon mx-4 is-hoverable" (click)="onChangePsw(user.username)">
+                        <i class="fa-solid fa-key" title="Change password"></i>
+                    </span>
+                    <span class="tag icon mx-4 is-hoverable" (click)="onDelete(user.username)">
+                        <i class="fa-solid fa-trash-can" title="delete"></i>
+                    </span>
+                </td>
+            </tr>
+            }
+        </table>
+</div>

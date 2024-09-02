@@ -1,0 +1,59 @@
+<div class="container is-max-tablet">
+    <div class="is-flex is-justify-content-center mt-1" style="min-height: 35px;"> 
+        @if(errorResponse){
+            <app-error [error] = "errorResponse"/>
+        }
+        @if(moneyTransferredFlag && !requestFlag){
+            <p class="is-size-7">{{'Money transferred'|translate}}</p> 
+        }
+        @if(transactionCancelledFlag && !requestFlag){
+            <p class="is-size-7">{{'Transaction cancelled'|translate}}</p> 
+        }
+        @if(requestFlag && !errorResponse){
+            <p class="is-size-7">{{'Loading'|translate}}...</p>
+        }
+    </div>
+
+    <app-transfer-form [sources]="sources" [dests]="dests" (moneyFlowEvent)="onMoneyTransfer($event)"/>
+
+
+    <div class="field is-grouped is-grouped-multiline is-justify-content-center">
+        @if(authService.getAccessLevel()>1){
+        <div class="field has-addons" >
+            <p class="control">
+                <button class="button is-size-7-touch is-size-6 tag mt-2" (click)="showSummarizedTransactions=true">{{'Month overview'|translate}}</button>
+            </p>
+            <p class="control">
+                <button class="button is-size-7-touch is-size-6 tag mt-2" (click)="showLastTransactions=true">{{'My Transactions'|translate}}</button>
+            </p>
+        </div>
+    } @else {
+        <button class="button is-size-7-touch is-size-6 tag mt-2" (click)="showLastTransactions=true">{{'My Transactions'|translate}}</button>
+    }
+    </div>
+
+    <app-containers [containers]="containers" [summaryMfs]="summaryMfs" (containerClick)="onContainerClick($event)"/>
+
+    <app-money-direction [directions]="selectedConatiner?.directions" [summaryMfs]="summaryMfs" (directionSelected)="onDirectionSelected($event)"/>
+
+    <app-date-between (dates)="onDatesSelected($event)"/>
+
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column  is-flex is-justify-content-center p-0 m-0">
+                <app-money-flow-table [data]="moneyFlowResponseDto" [showDetails]="true" (receiptSelected)="loadTransactionByTimestamp($event)" (pageSelected)="onPageSelected($event)"/> 
+            </div>
+        </div>
+    </div>
+
+    <app-transaction-details [active]="showDetails" [transaction]="transactionDetails" (close)="showDetails=false"/>  
+
+    <app-modal (close)="showSummarizedTransactions=false" [active]="showSummarizedTransactions">
+        <app-flow-summary [summary]="summaryMfs"/>
+    </app-modal>
+
+    <app-modal (close)="showLastTransactions=false" [active]="showLastTransactions">
+        <app-flow-summary [summary]="freshMfs" [showCancel]="true" (cancelMF)="onCancelMF($event)"/>
+    </app-modal>
+
+</div>

@@ -1,0 +1,13 @@
+
+<app-date-month (dateMonthSelected)="onDateSelected($event)" [label]="'Summary for ' + authService.getUsername()"/>
+<div class="is-flex is-justify-content-center my-1 loading"> 
+  <p class="is-size-7 " [class.is-hidden]="!requestFlag" >{{'Loading'|translate}} ...</p>
+  <app-error [error]="error()"/>
+</div>
+
+@if(summary){
+   @if(authService.getAccessLevel()>1){
+    <app-summary-table [summary]="summary.summary"/>
+  }
+    <app-summary-employees [employeeSummary]="summary.employees" [balances]="summary.summary.balances"/>
+}

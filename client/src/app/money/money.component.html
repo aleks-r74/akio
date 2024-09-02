@@ -1,0 +1,26 @@
+<div class="tabs is-boxed mt-3 ">
+    <ul>
+      <li routerLinkActive="is-active" [routerLinkActiveOptions]="{exact: true}">
+        <a routerLink="./">
+          <span>{{'Money'|translate}}</span>
+        </a>
+      </li>
+      <li routerLinkActive="is-active" [routerLinkActiveOptions]="{exact: true}">
+        <a routerLink="logs">
+          <span>{{'Logs'|translate}}</span>
+        </a>
+      </li>
+      <li  routerLinkActive="is-active" [class.is-hidden]="authService.getAccessLevel()<3">
+        <a routerLink="expenses">
+          <span>{{'Expenses'|translate}}</span>
+        </a>
+      </li>
+      <li  routerLinkActive="is-active" [class.is-hidden]="authService.getAccessLevel()<3">
+        <a routerLink="6thcuts">
+          <span>{{'6th haircuts'|translate}}</span>
+        </a>
+      </li>
+    </ul>
+</div>
+
+<router-outlet></router-outlet>

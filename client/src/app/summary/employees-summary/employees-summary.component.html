@@ -1,0 +1,75 @@
+<div class="container is-max-tablet">
+    <div class="is-flex is-justify-content-center">
+            <table class="table is-narrow is-striped is-bordered has-text-centered is-size-7-mobile my-5">
+                <tbody>
+                @for(summary of reducedSummary.values(); track $index){
+                    @if($first){
+                            <tr class="is-info">
+                                <th class="has-text-centered">{{'Name'|translate}}</th>
+                                <th class="has-text-centered">{{'Receipts'|translate}}</th>
+                                <th class="has-text-centered">{{'Gross'|translate}}</th>
+                                <th class="has-text-centered">{{'Free Cuts'|translate}}</th>
+                                <th class="has-text-centered">{{'Salary'|translate}}</th>
+                                <th class="has-text-centered left-border">{{'Balance'|translate}}</th>
+                            </tr>
+                }
+                    
+                    <tr>
+                        <td>{{summary.name}}</td>
+                        <td>{{summary.receipts}}</td>
+                        <td>{{summary.grossRev}}</td>
+                        <td>{{summary.freeHaircuts}}</td>
+                        <td>{{summary.salary}}</td>
+                        <td class="left-border">{{balances?.get(summary.name)}}</td>
+                    </tr>
+                }@empty {
+                    <tr><td>{{'Users summary not available'|translate}}</td></tr>
+                    }
+                </tbody>
+            </table>
+    </div>  
+    <div class="is-flex is-justify-content-center" >
+        <div class="table-container" #scrollableTable>
+            <table class="table is-striped is-bordered is-narrow-mobile has-text-centered is-size-7-mobile my-2">
+                <thead>
+                <tr class="is-primary">
+                    <th class="has-text-centered">{{'Date'|translate}}</th>
+                    <th class="has-text-centered">{{'Name'|translate}}</th>
+                    <th class="has-text-centered">{{'Receipts'|translate}}</th>
+                    <th class="has-text-centered">{{'Gross'|translate}}</th>
+                    <th class="has-text-centered">{{'Free Cuts'|translate}}</th>
+                    <th class="has-text-centered">{{'Salary'|translate}}</th>
+                    <th class="has-text-centered">{{'Paid'|translate}}</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                @for(date of dates; track $index){
+                    @if($first){
+
+                    }                
+                        @for(record of map.get(date)?.values(); track $index){
+                            <tr>
+                                @if(rowSpan.get(date)){
+                                    @if($index == 0){
+                                        <td [rowSpan]="rowSpan.get(date)" class="is-vcentered">{{record.date|date: 'MMM d'}}</td>
+                                    }
+                                } @else {
+                                    <td>{{record.date|date: 'MMM d'}}</td>
+                                }
+                                <td>{{record.name}}</td>
+                                <td>{{record.receipts}}</td>
+                                <td>{{record.grossRev}}</td>
+                                <td>{{record.freeHaircuts}}</td>
+                                <td>{{record.salary}}</td>
+                                <td>{{record.paid}}</td>
+                            </tr>
+                        }
+
+                }     
+            </tbody>
+            </table> 
+        </div>
+    </div>
+        
+</div> 

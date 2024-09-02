@@ -1,0 +1,20 @@
+@if(transactionSum){
+    <div class="is-flex is-justify-content-center">
+        <div class="tags has-addons m-0 p-0 mx-1">
+            <span class="tag is-light min-width is-size-6 is-size-7-mobile">{{'Transactions'|translate}}</span>
+            <span class="tag is-info is-light is-size-6  is-size-7-mobile min-width">{{transactionNum}}</span>
+        </div>
+        <div class="tags has-addons m-0 p-0 mx-1">
+            <span class="tag is-light min-width is-size-6 is-size-7-mobile">{{'Total sum'|translate}}</span>
+            <span class="tag is-info is-light is-size-6  is-size-7-mobile min-width">{{transactionSum}}</span>
+        </div>
+        @if(showPageSum){
+            <div class="tags has-addons m-0 p-0 mx-1">
+                <span class="tag is-light min-width is-size-6 is-size-7-mobile">{{'Page sum'|translate}}</span>
+                <span class="tag is-info is-light is-size-6  is-size-7-mobile min-width">{{pageSum}}</span>
+            </div>
+        }
+    </div>
+}
+
+

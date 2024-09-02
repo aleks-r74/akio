@@ -1,0 +1,46 @@
+<table class="table is-narrow-touch is-size-7-touch is-size-6 has-text-centered is-clipped" [class.is-hoverable]="showDetails" [class.is-hidden]="!data?.moneyFlows?.length">
+    <thead >
+        <tr >
+            <td [attr.colspan]="screenSize>500? 7: 6" class="m-0 p-0">
+                <div class="is-flex is-justify-content-center mb-1">
+                @if(data?.totalPages && data!.totalPages > 1){
+                    <app-pagination [currentPage]="data?.currentPage!+1" [totalPages]="data?.totalPages!" (pageSelected)="onPageSelected($event)"/>
+                }       
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th class="has-text-centered ">{{'Date'|translate}}</th>
+            <th class="has-text-centered">{{'Receipt'|translate}}</th>
+            <th class="has-text-centered ">{{'Source'|translate}}</th>
+            <th class="has-text-centered is-narrow">{{'Dest'|translate}}</th>
+            <th class="has-text-centered is-narrow">{{'Amount'|translate}}</th>
+            <th class="has-text-centered is-narrow">{{'Initiator'|translate}}</th>
+            <th class="has-text-centered is-hidden-mobile">{{'Description'|translate}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for(row of data?.moneyFlows; track $index){
+        <tr (click)="onMfClick(row.time_stamp!)">
+            <td>{{row.time_stamp | date: 'MMM d, HH:mm'}}</td>
+            <td>{{row.receipt_num}}</td>
+            <td>{{row.source | titlecase}}</td>
+            <td>{{row.dest | titlecase}}</td>
+            <td>{{row.amount}}</td>
+            <td>{{row.initiator}}</td>
+            <td class=" is-hidden-mobile">{{row.description}}</td>
+        </tr>
+        }
+    </tbody>
+    <tfoot [class.is-hidden]="!data?.totalPages">
+        <tr>
+            <td></td>
+            <td class="is-hidden-mobile has-text-centered has-text-weight-bold">{{data?.moneyFlows?.length}}/{{data?.transactionsNum}}</td>
+            <td></td>
+            <td></td>
+            <td class="has-text-centered has-text-weight-bold">{{data?.totalSumPage}}/{{data?.totalSum}}</td>
+            <td></td>
+            <td class="has-text-centered has-text-weight-bold">{{'Page'|translate}} {{data?.currentPage!+1}}/{{data?.totalPages}}</td>
+        </tr>
+    </tfoot>
+</table>

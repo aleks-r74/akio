@@ -1,0 +1,30 @@
+<app-date-month (dateMonthSelected)="onMonthSelected($event)" label="Schedule for"/>
+@if(authService.getAccessLevel()>1){
+    <div class="is-flex is-justify-content-center m-3">
+        <button class="button is-danger is-outlined is-rounded" style="width:150px;" (click)="onSaveClick()">{{'Save'|translate}}</button>
+    </div>
+}
+
+<div class="is-flex is-justify-content-center m-0 min-height is-size-7">
+    @if(requestFlag){
+        @if(errorResponse){
+            <app-error [error]="errorResponse"/>
+        }@else{
+            <p>{{'Loading'|translate}}...</p>
+        }
+    }
+    @if(successFlag){
+        <p>{{'Saved'|translate}}</p>
+    }
+</div>
+
+<div class="container is-max-tablet">
+<div class="fixed-grid has-3-cols-mobile has-4-cols-tablet has-6-cols-desktop">
+    <div class="grid is-column-gap-1 mx-4">
+        @for(day of displaySchedule; track $index){
+            <app-calendar-box [scheduleDisplay]="day" (scheduleUpdate)="onScheduleUpdate($event)"/>
+        }
+
+    </div>
+  </div>
+</div>

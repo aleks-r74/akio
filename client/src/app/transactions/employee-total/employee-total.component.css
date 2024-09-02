@@ -1,0 +1,17 @@
+.fixed-width-tag {
+  min-width: 100px;
+  white-space: nowrap;
+}
+.pagination-height{
+  height: 42px;
+}
+@media (min-width: 1024px) {
+  .mt-responsive {
+    margin-top: 1rem;
+  }
+}
+@media (max-width: 1023px){
+  .mt-responsive {
+    margin-top: 0;
+  }
+}

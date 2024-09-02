@@ -1,0 +1,67 @@
+<app-modal [active]="active" (close)="closeDetails()">
+@if(transaction)
+{
+
+    <table class="table my-0 is-narrow-mobile is-size-6 is-size-7-touch is-fullwidth">
+        <tr>
+            <th class="has-text-centered">{{'Status'|translate}}</th>
+            <th class="has-text-centered">{{'Free'|translate}}</th>
+            <th class="has-text-centered is-hidden-mobile">{{'Phone'|translate}}</th>
+            <th class="has-text-centered">{{'Money accepted'|translate}}</th>
+            <th class="has-text-centered is-hidden-mobile">{{'Money posted'|translate}}</th>
+            <th class="has-text-centered">{{'Payment type'|translate}}</th>
+            <th class="has-text-centered">{{'Employee'|translate}}</th>
+        </tr>
+        <tr>
+            <td class="has-text-centered">{{transaction.finished? "OK":"ERR"}}</td>
+            <td class="has-text-centered">{{transaction.has_free_haircut? "YES":"NO"}}</td>
+            <td class="has-text-centered is-hidden-mobile">{{transaction.phone_num}}</td>
+            <td class="has-text-centered">{{transaction.money_accepted}}</td>
+            <td class="has-text-centered is-hidden-mobile">{{transaction.money_posted}}</td>
+            <td class="has-text-centered">{{transaction.payment_type}}</td>
+            <td class="has-text-centered">
+                <div class="block" [class.is-invisible]="transaction.employee.length < 1">
+                    <span class="tag is-success button">
+                      {{transaction.employee|translate}}
+                      <button class="delete is-small" [class.is-hidden]="authService.getAccessLevel()==1 || !todaysTransaction(transaction.date_time)" 
+                      (click)="unAssign(transaction.receipt_num)"></button>
+                    </span>
+                  </div>
+            </td>
+        </tr>
+    </table>
+
+    <div class="has-text-centered my-1">
+        @for(service of allServices(); track service){
+            <div class="has-background-success-70 is-size-7-touch has-text-weight-semibold"><i class="fa-solid fa-scissors"></i> {{service}}</div>
+        }
+    </div>
+
+    @if(relatedTransactions){
+        <div class="is-flex is-justify-content-center my-3 my-2" style="width: 100%">
+            <app-money-flow-table [data]="relatedTransactions"/>
+        </div>
+        
+    } @else{
+        <div class="has-text-centered my-1">
+            <button class="button is-small" (click)="onShowMoneyTransactionsClick(transaction.receipt_num, transaction.date_time)">
+                @if(!requestFlag){
+                    {{'Show Related Transactions'|translate}}
+                }
+                @else {
+                    {{'Loading'|translate}}...
+                }
+            </button>
+        </div>
+    }
+} @else{
+    <div class="has-text-centered my-1">
+        <div class="box">No details available</div>
+        <button class="button is-small" (click)="closeDetails()">
+            <span>OK</span>
+        </button>
+    </div>
+} 
+</app-modal>
+
+

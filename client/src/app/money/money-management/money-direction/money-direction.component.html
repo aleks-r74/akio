@@ -1,0 +1,17 @@
+<div class="container is-max-tablet has-text-centered mt-2">
+    <div class="fixed-grid has-4-cols">
+        <div class="cell"> 
+        @for(direction of directions; track $index){
+            <button class="button tag is-hoverable has-text-white m-1 is-size-6 is-size-7-mobile" (click)="onDirectionSelected(direction)"
+            [ngClass]="{
+                'has-background-info-65': direction!=selected, 
+                'has-background-info-35': direction==selected,
+                'highlighted' : isFreshDirection(direction)
+            }"
+            >{{direction.source | titlecase}} -> {{direction.dest | titlecase}}</button>
+        }
+        </div>
+
+
+    </div>
+</div>

@@ -1,0 +1,25 @@
+.left-border{
+    border-left: 5px solid #20c200 !important;
+    border-width: 10px;
+}
+
+.table-container {
+    position: relative;
+    max-height: 350px;
+    overflow-y: auto;
+}
+    
+table thead, table tfoot {
+    position: sticky;
+    z-index: 2; 
+}
+    
+thead {
+    top: 0;
+}
+    
+tfoot {
+    bottom: 0;
+}
+
+

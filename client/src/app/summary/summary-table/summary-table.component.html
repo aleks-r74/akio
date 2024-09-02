@@ -1,0 +1,38 @@
+<div class="container is-max-tablet">
+    <div class="is-flex is-justify-content-center is-size-7-mobile">
+        <table class="table  m-0 p-0">
+            <tr><th>{{'Total revenue'|translate}}</th><td class="has-text-centered">{{summary?.totalRevenue}}</td></tr>  
+            <tr (click)="showSpendings=true">
+                <th>{{'Total spendings'|translate}}</th>
+                <td class="has-text-centered"><a class="has-text-weight-bold">{{expenses?.get('Total')}}</a></td>
+            </tr>   
+            <tr><th>{{'Cash'|translate}} </th><td class="has-text-centered">{{summary?.totalCash}}</td></tr>
+        </table>
+    
+        <table class="table m-0 p-0">
+            <tr><th>{{'Total receipts'|translate}}</th><td class="has-text-centered">{{summary?.totalReceipts}}</td></tr>
+            <tr><th>{{'Free haircuts'|translate}}</th><td class="has-text-centered">{{summary?.freeHaircuts}}</td></tr>
+            <tr><th>{{'Not assigned receipts'|translate}} </th><td class="has-text-danger has-text-centered">{{summary?.notAssignedTransactions}}</td></tr>
+        </table>
+    </div>
+    
+    <div class="tags has-addons is-justify-content-center mt-4">
+            <span class="tag is-warning has-text-weight-bold is-size-6 is-size-7-mobile">{{'Net revenue'|translate}}</span>
+            <span class="tag is-info has-text-weight-bold is-size-6 is-size-7-mobile">{{summary?.netRevenue}}</span>
+    </div>
+</div>    
+
+<app-modal [active]="showSpendings" (close)="showSpendings=false">
+<table class="table is-size-7">
+    <tr><th colspan="2" class="has-text-centered">{{'Total spendings'|translate}}</th></tr>
+    @for(expKey of expenses?.keys(); track $index){
+        <tr>
+            @if($last){
+                <td class="has-text-weight-bold">{{expKey}}</td><td class="has-text-weight-bold">{{expenses?.get(expKey)}}</td>
+            }@else {
+                <td>{{expKey}}</td><td>{{expenses?.get(expKey)}}</td>
+            }
+        </tr>
+    }
+</table>
+</app-modal>

@@ -26,12 +26,21 @@ public class ParserUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(ParserUtils.class);
 
-    public ParserUtils() throws IOException {
-        this.driver = new EdgeDriver();
-        wDriver = new WebDriverWait(driver, Duration.ofMillis(FLUENT_WAIT_TIMEOUT));
-        js = (JavascriptExecutor) driver;
-        driver.manage().window().maximize();
-        loadXpathProperties();
+    public ParserUtils() throws IOException, InterruptedException {
+        Thread parser = new Thread(){
+            @Override
+            public void run(){
+                ParserUtils.this.driver = new EdgeDriver();
+                wDriver = new WebDriverWait(driver, Duration.ofMillis(FLUENT_WAIT_TIMEOUT));
+                js = (JavascriptExecutor) driver;
+                driver.manage().window().maximize();
+            }
+        };
+        parser.setDaemon(false);
+        parser.setPriority(Thread.MAX_PRIORITY);
+        parser.start();
+        parser.join();
+        ParserUtils.loadXpathProperties();
     }
 
     public Optional<WebElement> getElement(String xpath, WaitType w, Integer... waitTimeSec) {

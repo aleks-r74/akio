@@ -2,6 +2,7 @@ package com.alexportfolio.akiorestserver.service;
 
 import com.alexportfolio.akiorestserver.repository.MCLogRepo;
 import com.alexportfolio.akiorestserver.repository.entities.MCLogEnt;
+import com.alexportfolio.akiorestserver.repository.entities.MoneyContainerEnt;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,33 +29,28 @@ public class MCLogService {
     @Value("${excludeFromLog}")
     List<String> excludeFromLog = List.of();
 
-    private LocalDate lastLog;
-
-    // when date is null log will be performed only before 9AM and the time will be set to 12AM
+    // when dateTime is null log will be performed only before 9AM and the time will be set to 12AM
     @Transactional
-    public void log(LocalDate date){
+    public void log(LocalDateTime dateTime){
         // log is performed before the shift begins, once a day
-        if(LocalTime.now().isAfter(LocalTime.of(9,0,0)) && date==null) return;
-        if(date==null) date = LocalDate.now();
+        if(dateTime==null && LocalTime.now().isAfter(LocalTime.of(9,0,0))) return;
 
-        // get last log either from DB or from the lastLog variable
-        // get all logs from db with their ID's, update values, write back
-        if(lastLog==null)
-            lastLog = mcLogRepo.getLastLogs().stream()
-                    .map(mcl->mcl.getTimestamp().toLocalDate())
-                    .findAny()
-                    .orElse(LocalDate.of(2023,1,1));
-        // if there are no logs today
-        if(lastLog.isBefore(date)){
-            // log
-            var timestamp = LocalDateTime.of(date,LocalTime.of(0,0,0));
-            Set<MCLogEnt> logs = new TreeSet<>();
-            for(var container: moneyContainerService.findAll())
-                logs.add(new MCLogEnt(timestamp,container.getContainerName(),container.getBalance()));
-            // save
-            mcLogRepo.saveAll(logs);
-            lastLog = date;
-        }
+        var lastLogs = mcLogRepo.getLastLogs();
+        var containers = moneyContainerService.findAllNoRestrictions();
+        var currentBalances = containers.stream().collect(Collectors.toMap(MoneyContainerEnt::getContainerName,MoneyContainerEnt::getBalance,(a,b)->a));
+        var logBalances = lastLogs.stream().collect(Collectors.toMap(MCLogEnt::getContainerName, MCLogEnt::getBalance, (a,b)->a));
+        // if containers haven't changed since lastLogs, return
+        boolean discrepancies = logBalances.entrySet().stream()
+                .anyMatch(lbe->!currentBalances.get(lbe.getKey()).equals(lbe.getValue()));
+        if(!discrepancies) return;
+        if(dateTime==null) dateTime = LocalDateTime.of(LocalDateTime.now().toLocalDate(),LocalTime.MIDNIGHT);
+
+        // log
+        Set<MCLogEnt> logs = new TreeSet<>();
+        for(var container: containers)
+            logs.add(new MCLogEnt(dateTime,container.getContainerName(),container.getBalance()));
+        // save
+        mcLogRepo.saveAll(logs);
     }
 
     public Map<LocalDateTime,TreeSet<MCLogEnt>> getLogsBetween(LocalDateTime start, LocalDateTime end){
@@ -106,5 +102,12 @@ public class MCLogService {
         Map<LocalDateTime,TreeSet<MCLogEnt>> sortedKeysMap = new TreeMap<>(Collections.reverseOrder());
         sortedKeysMap.putAll(resultMap);
         return sortedKeysMap;
+    }
+
+    @Transactional
+    public void removeLog(LocalDateTime date){
+        var logs = mcLogRepo.findAllBetween(date,date);
+        for(var log : logs)
+            mcLogRepo.delete(log);
     }
 }

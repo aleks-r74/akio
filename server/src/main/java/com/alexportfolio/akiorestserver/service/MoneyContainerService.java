@@ -3,8 +3,6 @@ package com.alexportfolio.akiorestserver.service;
 import com.alexportfolio.akiorestserver.repository.MoneyContainerRepo;
 import com.alexportfolio.akiorestserver.repository.entities.MoneyContainerEnt;
 import lombok.AllArgsConstructor;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +21,10 @@ public class MoneyContainerService {
     }
 
     public TreeSet<MoneyContainerEnt> findAll(){
+        return StreamSupport.stream(moneyContainerRepo.findAll().spliterator(),false).collect(Collectors.toCollection(TreeSet::new));
+    }
+    // returns moneycontainers without user-specific restrictions imposed by aspect
+    public TreeSet<MoneyContainerEnt> findAllNoRestrictions(){
         return StreamSupport.stream(moneyContainerRepo.findAll().spliterator(),false).collect(Collectors.toCollection(TreeSet::new));
     }
 

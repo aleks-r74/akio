@@ -5,6 +5,8 @@ import com.alexportfolio.akiorestserver.repository.entities.TransactionEnt;
 import com.alexportfolio.akiorestserver.webParser.Parser;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +28,8 @@ public class ParserService {
     private final Environment env;
     private final MoneyContainerService moneyContainerService;
     private final MoneyFlowService moneyFlowService;
-
+    private final MCLogService mcLogService;
+    private static final Logger logger = LoggerFactory.getLogger(ParserService.class);
     private static Instant dataInconsistencyMarker;
     private static final int PARSE_STARTING_POINT = 30;
 
@@ -46,11 +49,14 @@ public class ParserService {
 
             TreeSet<TransactionEnt> transactions = parser.getTransactions(fromD, toD);
             // exit if no transactions found
-            if (transactions.isEmpty()) return;
-            System.out.printf("found %d new transactions", transactions.size());
-            saveFoundTransactions(transactions);
+            if (!transactions.isEmpty()) {
+                logger.info("found %d new transactions".formatted(transactions.size()));
+                saveFoundTransactions(transactions);
+            }
+            checkMoneyCollected();
         } catch (RuntimeException e){
-            System.out.println("Exception during parsing. Transactions are not saved");
+            logger.info("Exception during parsing");
+            logger.warn(e.getMessage());
         }
 
     }
@@ -71,6 +77,7 @@ public class ParserService {
         int previousTerminalBalance = moneyContainerService.findByContainerName("terminal").getBalance().intValue();
 
         if (cashInTerminal==0 && previousTerminalBalance!=0){
+            mcLogService.log(LocalDateTime.now());
             moneyService.transferMoney(new MoneyFlowEnt("terminal","safe", new BigDecimal(previousTerminalBalance),"Automatic money collection"));
         }
         // 2. Cash was collected from the terminal BUT for some reason there IS cash in the terminal

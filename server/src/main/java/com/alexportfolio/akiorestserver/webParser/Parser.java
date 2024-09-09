@@ -36,13 +36,13 @@ public class Parser extends ParserUtils {
     Boolean parseServiceNames = true;
 
     @Autowired
-    public Parser(TransactionsService transactionsService, WorkScheduleService workScheduleService, UsersService usersService) throws IOException {
+    public Parser(TransactionsService transactionsService, WorkScheduleService workScheduleService, UsersService usersService) throws IOException, InterruptedException {
         this.workScheduleService = workScheduleService;
         this.transactionsService = transactionsService;
         this.usersService = usersService;
     }
 
-    public Parser() throws IOException { }
+    public Parser() throws IOException,InterruptedException { }
 
     public void login(String username, String psw){
         driver.get("https://cloud.pay-point.com/server/dispatcher/v2/operations.seam");
@@ -214,7 +214,7 @@ public class Parser extends ParserUtils {
         // waits for the dialog to be loaded
         var spinner = getElement(xpaths.get("loading_spinner"),WaitType.PRESENCE);
         if(spinner.isPresent()) {
-            new WebDriverWait(driver, Duration.ofMillis(5000))
+            new WebDriverWait(driver, Duration.ofMillis(10000))
                     .until(ExpectedConditions.invisibilityOf(spinner.get()));
         }
     }
@@ -233,10 +233,15 @@ public class Parser extends ParserUtils {
     }
 
     public BigDecimal getTotalCashFromTerminal(){
-        driver.get("https://cloud.pay-point.com/server/monitoring/equipment_statuses3.seam");
-        var cash = getElement(xpaths.get("total_cash_in_terminal"), WaitType.PRESENCE,5);
-        String cashStr = cash.map(WebElement::getText).orElse("0");
+        String cashStr = "";
+        for(int i=0; i<5; i++){
+            driver.get("https://cloud.pay-point.com/server/monitoring/equipment_statuses3.seam");
+            var cash = getElement(xpaths.get("total_cash_in_terminal"), WaitType.PRESENCE,5);
+            cashStr = cash.map(WebElement::getText).orElse("0");
             cashStr = cashStr.replaceAll("[^0-9]","");
+            if(!cashStr.equals("0"))
+                break;
+        }
         return new BigDecimal(cashStr);
     }
 

@@ -143,14 +143,16 @@ public class RestrictionsAspects {
         Integer currentUserAccessLevel = usersService.getCurrentUserAccessLevel();
 
         if(currentUserAccessLevel<0) return;
+
         if(!directionValidator.isDirectionAllowed(new Direction(mf.getSource(),mf.getDest())))
             throw new IllegalArgumentException("You are not authorized to transfer money from %s to %s".formatted(mf.getSource(),mf.getDest()));
 
-        String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
-
         // add Initiator column to all persisted moneyFlowEnts
+        String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
         mf.setInitiator(currentUser);
 
+        // log operation
+        mcLogService.log(mf.getTime_stamp());
     }
 
     // applies restrictions on summary

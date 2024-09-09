@@ -153,7 +153,7 @@ public class MoneyFlowService {
             try{
                 // log moneycontainers each new date
                 if(prevMoneyFlow!=null && prevMoneyFlow.getTime_stamp().toLocalDate().isBefore(moneyFlow.getTime_stamp().toLocalDate()))
-                    mcLogService.log(prevMoneyFlow.getTime_stamp().toLocalDate());
+                    mcLogService.log(prevMoneyFlow.getTime_stamp().withHour(0).withMinute(0).withSecond(0));
                 // reset containers on a new month
                 if(prevMoneyFlow!=null && prevMoneyFlow.getTime_stamp().getMonthValue()<moneyFlow.getTime_stamp().getMonthValue())
                     for(var containerToReset: resetContainers)
@@ -249,7 +249,7 @@ public class MoneyFlowService {
     public void applyDatedExpenses() {
         if(lastFixedExpensesApplicationTime!=null && LocalDateTime.now().isBefore(lastFixedExpensesApplicationTime.plusHours(1))) return;
         Set<MoneyFlowEnt> datedExpenses = expensesService.getExpensesForDate(LocalDateTime.now());
-        transferMoney(datedExpenses);
+        if(!datedExpenses.isEmpty()) transferMoney(datedExpenses);
         lastFixedExpensesApplicationTime = LocalDateTime.now();
     }
 
@@ -297,11 +297,13 @@ public class MoneyFlowService {
 
         var entitiesToCancel = moneyFlowRepo.findMoneyFlowByReceipt(receiptNum, todayStart);
         for(var mf: entitiesToCancel){
-            // for client's transaction we cancel only wallet->user direction
+            // for the external transaction (from the terminal) we cancel only wallet->user direction
             if(mf.getReceipt_num()< systemReceiptBeginNum && !mf.getSource().equals("wallet")) continue;
             cancelMoneyFlowEntity(mf);
         }
-
+        // remove log for user transaction (all moneyflows have the same timestamp)
+        if(receiptNum>systemReceiptBeginNum)
+            entitiesToCancel.stream().findAny().ifPresent(mf->mcLogService.removeLog(mf.getTime_stamp()));
         // unassign employee for the client's transaction
         if(clientTransaction!=null){
             clientTransaction.setEmployee(null);

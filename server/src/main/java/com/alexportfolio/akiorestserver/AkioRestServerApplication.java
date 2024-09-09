@@ -29,14 +29,13 @@ public class AkioRestServerApplication {
 		context = SpringApplication.run(AkioRestServerApplication.class, args);
 	}
 
+	// restarts the app. not used in the current version.
 	public static void restart() {
 		ApplicationArguments args = context.getBean(ApplicationArguments.class);
-
 		Thread thread = new Thread(() -> {
 			context.close();
 			context = SpringApplication.run(AkioRestServerApplication.class, args.getSourceArgs());
 		});
-
 		thread.setContextClassLoader(mainThreadClassLoader);
 		thread.setDaemon(false);
 		thread.start();

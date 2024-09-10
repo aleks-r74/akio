@@ -36,8 +36,6 @@ public class RestrictionsAspects {
     @NonNull
     MoneyContainerService moneyContainerService;
     @NonNull
-    MCLogService mcLogService;
-    @NonNull
     MoneyFlowService moneyFlowService;
     @NonNull
     DirectionValidator directionValidator;
@@ -151,8 +149,6 @@ public class RestrictionsAspects {
         String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
         mf.setInitiator(currentUser);
 
-        // log operation
-        mcLogService.log(mf.getTime_stamp());
     }
 
     // applies restrictions on summary

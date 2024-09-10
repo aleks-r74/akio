@@ -185,6 +185,8 @@ public class MoneyFlowService {
             throw new IllegalArgumentException("The source and destination can not be the same");
         if( moneyFlowEnt.getDescription() == null || moneyFlowEnt.getDescription().isBlank() )
             throw new IllegalArgumentException("Description of the transaction can not be empty");
+        if( moneyFlowEnt.getDescription().length() > 255 )
+            throw new IllegalArgumentException("Error. The description is too long.");
         if( moneyFlowEnt.getAmount().compareTo(new BigDecimal(0)) < 0 )
             throw new IllegalArgumentException("Amount can not be negative");
         if( moneyFlowEnt.getAmount().compareTo(BigDecimal.valueOf(maxTransferSum))>0)

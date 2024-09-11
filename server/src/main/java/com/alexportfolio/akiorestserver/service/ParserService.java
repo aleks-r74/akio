@@ -77,6 +77,7 @@ public class ParserService {
         int previousTerminalBalance = moneyContainerService.findByContainerName("terminal").getBalance().intValue();
 
         if (cashInTerminal==0 && previousTerminalBalance!=0){
+            mcLogService.log(LocalDateTime.now());
             moneyService.transferMoney(new MoneyFlowEnt("terminal","safe", new BigDecimal(previousTerminalBalance),"Automatic money collection"));
         }
         // 2. Cash was collected from the terminal BUT for some reason there IS cash in the terminal

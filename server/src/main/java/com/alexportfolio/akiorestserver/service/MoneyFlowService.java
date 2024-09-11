@@ -180,17 +180,17 @@ public class MoneyFlowService {
     @CacheEvict(value="moneyflows", allEntries = true)
     public void transferMoney(MoneyFlowEnt moneyFlowEnt, MoneyFlowEnt... exclude){
         if( moneyFlowEnt== null )
-            throw new IllegalArgumentException("moneyFlow can not be null");
+            throw new IllegalArgumentException("Error. moneyFlow can not be null");
         if( moneyFlowEnt.getSource().equals(moneyFlowEnt.getDest()) )
-            throw new IllegalArgumentException("The source and destination can not be the same");
+            throw new IllegalArgumentException("Error. The source and destination can not be the same");
         if( moneyFlowEnt.getDescription() == null || moneyFlowEnt.getDescription().isBlank() )
-            throw new IllegalArgumentException("Description of the transaction can not be empty");
-        if( moneyFlowEnt.getDescription().length() > 255 )
-            throw new IllegalArgumentException("Error. The description is too long.");
+            throw new IllegalArgumentException("Error. Description of the transaction can not be empty");
+        if( moneyFlowEnt.getDescription().length()>255 )
+            throw new IllegalArgumentException("Error. Description is too long.");
         if( moneyFlowEnt.getAmount().compareTo(new BigDecimal(0)) < 0 )
-            throw new IllegalArgumentException("Amount can not be negative");
+            throw new IllegalArgumentException("Error. Amount can not be negative");
         if( moneyFlowEnt.getAmount().compareTo(BigDecimal.valueOf(maxTransferSum))>0)
-            throw new IllegalArgumentException("Amount can not be more than " + maxTransferSum);
+            throw new IllegalArgumentException("Error. Amount can not be more than " + maxTransferSum);
 
         //check if the moneyFlow was saved before
         if(exclude!=null)

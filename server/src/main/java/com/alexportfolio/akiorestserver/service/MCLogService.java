@@ -7,6 +7,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -30,7 +31,7 @@ public class MCLogService {
     List<String> excludeFromLog = List.of();
 
     // when dateTime is null log will be performed only before 9AM and the time will be set to 12AM
-    @Transactional
+    @Transactional(propagation= Propagation.REQUIRES_NEW)
     public void log(LocalDateTime dateTime){
         // log is performed before the shift begins, once a day
         if(dateTime==null && LocalTime.now().isAfter(LocalTime.of(9,0,0))) return;

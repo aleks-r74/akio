@@ -15,10 +15,11 @@ import com.alexportfolio.akiorestserver.utils.DirectionValidator;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.math.BigDecimal;
@@ -35,6 +36,8 @@ public class RestrictionsAspects {
     UsersService usersService;
     @NonNull
     MoneyContainerService moneyContainerService;
+    @NonNull
+    MCLogService mcLogService;
     @NonNull
     MoneyFlowService moneyFlowService;
     @NonNull
@@ -132,23 +135,32 @@ public class RestrictionsAspects {
         return returnObj;
     }
 
-    // apply restrictions on money transfer operations and set Initiator column
-    @Before("execution(* com.alexportfolio.akiorestserver.service.MoneyFlowService.transferMoney(com.alexportfolio.akiorestserver.repository.entities.MoneyFlowEnt, com.alexportfolio.akiorestserver.repository.entities.MoneyFlowEnt...))")
-    public void beforeTransferMoney(JoinPoint jp){
+    // apply restrictions on money transfer operations, apply logging and set Initiator column
+    @Around("execution(* com.alexportfolio.akiorestserver.service.MoneyFlowService.transferMoney(com.alexportfolio.akiorestserver.repository.entities.MoneyFlowEnt, com.alexportfolio.akiorestserver.repository.entities.MoneyFlowEnt...))")
+    public void aroundTransferMoney(ProceedingJoinPoint jp) throws Throwable{
         Object args[] = jp.getArgs();
         if(args == null || args.length == 0) return;
         MoneyFlowEnt mf = (MoneyFlowEnt) args[0];
         Integer currentUserAccessLevel = usersService.getCurrentUserAccessLevel();
 
-        if(currentUserAccessLevel<0) return;
-
         if(!directionValidator.isDirectionAllowed(new Direction(mf.getSource(),mf.getDest())))
             throw new IllegalArgumentException("You are not authorized to transfer money from %s to %s".formatted(mf.getSource(),mf.getDest()));
 
         // add Initiator column to all persisted moneyFlowEnts
-        String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
-        mf.setInitiator(currentUser);
-
+        if(currentUserAccessLevel>0) {
+            String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+            mf.setInitiator(currentUser);
+        } else {
+            // for system initiated money transfers proceed without logging
+            jp.proceed(args);
+            return;
+        }
+        // log operation
+        mcLogService.log(mf.getTime_stamp());
+        // call intercepted method
+        jp.proceed(args);
+        // log again
+        mcLogService.log(mf.getTime_stamp());
     }
 
     // applies restrictions on summary

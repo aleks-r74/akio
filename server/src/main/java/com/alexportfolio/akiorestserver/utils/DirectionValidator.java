@@ -85,6 +85,7 @@ public class DirectionValidator {
     }
 
     public boolean isDirectionAllowed(Direction d){
+        if(usersService.getCurrentUserAccessLevel()<0) return true;
         return getDirectionsForCurrentUser().contains(d);
     }
 

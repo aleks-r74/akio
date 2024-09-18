@@ -159,8 +159,8 @@ public class RestrictionsAspects {
         mcLogService.log(mf.getTime_stamp());
         // call intercepted method
         jp.proceed(args);
-        // log again
-        mcLogService.log(mf.getTime_stamp());
+        // log again with different timestamp
+        mcLogService.log(mf.getTime_stamp().plusSeconds(1));
     }
 
     // applies restrictions on summary

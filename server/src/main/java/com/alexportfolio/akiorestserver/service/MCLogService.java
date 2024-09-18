@@ -31,7 +31,7 @@ public class MCLogService {
     List<String> excludeFromLog = List.of();
 
     // when dateTime is null log will be performed only before 9AM and the time will be set to 12AM
-    @Transactional(propagation= Propagation.REQUIRES_NEW)
+    @Transactional
     public void log(LocalDateTime dateTime){
         // log is performed before the shift begins, once a day
         if(dateTime==null && LocalTime.now().isAfter(LocalTime.of(9,0,0))) return;
@@ -107,7 +107,7 @@ public class MCLogService {
 
     @Transactional
     public void removeLog(LocalDateTime date){
-        var logs = mcLogRepo.findAllBetween(date,date);
+        var logs = mcLogRepo.findAllBetween(date,date.plusSeconds(1));
         for(var log : logs)
             mcLogRepo.delete(log);
     }

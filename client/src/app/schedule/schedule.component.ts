@@ -91,7 +91,6 @@ export class ScheduleComponent implements OnInit{
         }
       }
       displaySchedule.push(scheduleDisplayElement);
-      console.log(scheduleDisplayElement);
     }
     return displaySchedule;
   }

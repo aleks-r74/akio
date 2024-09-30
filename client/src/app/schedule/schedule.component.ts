@@ -56,7 +56,7 @@ export class ScheduleComponent implements OnInit{
       complete: ()=>{
         this.requestFlag = false;
         this.errorResponse = undefined;
-        let employeesFromSchedule = this.scheduleDtos.map(dto=>dto.employees)
+        let employeesFromSchedule = this.scheduleDtos.map(dto=>Array.from(dto.employees))
               .reduce((prev,curr)=>{ // create big array of this.scheduledDtos.employees values
                 curr.forEach(el=>prev.push(el));
                 return prev; 
@@ -91,6 +91,7 @@ export class ScheduleComponent implements OnInit{
         }
       }
       displaySchedule.push(scheduleDisplayElement);
+      console.log(scheduleDisplayElement);
     }
     return displaySchedule;
   }
@@ -103,6 +104,7 @@ export class ScheduleComponent implements OnInit{
   }
 
   onMonthSelected(dateMonth: string){
+    if(!dateMonth) return;
     this.successFlag = false;
     let date = dateMonth + "-01";
     this.loadSchedule(date);

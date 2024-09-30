@@ -22,7 +22,7 @@ ngOnChanges(changes: SimpleChanges): void {
     for(let exp of this.expenses?.values()){
       totalExpenses += exp;
     }
-    this.expenses.set('Total', totalExpenses);
+    this.expenses.set('Total', Math.floor(totalExpenses));
   }
 }
 

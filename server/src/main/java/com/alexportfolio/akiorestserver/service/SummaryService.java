@@ -61,7 +61,7 @@ public class SummaryService {
         }
 
     private Map<LocalDate, List<EmployeeSummaryDto>> getEmployeesSummary(Collection<TransactionEnt> transactions, Collection<MoneyFlowEnt> moneyFlows) {
-        Map<LocalDate, List<EmployeeSummaryDto>> employeesSummary = new HashMap<>();
+        Map<LocalDate, List<EmployeeSummaryDto>> employeesSummary = new TreeMap<>(Comparator.reverseOrder());
         Map<LocalDate, List<TransactionEnt>> transactionsGroupedByDate = transactions.stream().collect(Collectors.groupingBy(t->t.getDate_time().toLocalDate()));
         Set<String> employees = transactions.stream().map(TransactionEnt::getEmployee).collect(Collectors.toSet());
         // for each date

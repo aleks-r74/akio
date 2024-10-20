@@ -168,7 +168,7 @@ public class MoneyFlowService {
                                 moneyFlow.getDest(),
                                 new BigDecimal(0),
                                 "WARNING. Can't transfer %.1f %s - %s".formatted(moneyFlow.getAmount(), moneyFlow.getDescription(), e.getMessage()),
-                                9_999_999
+                                0
                                 )
                         );
 

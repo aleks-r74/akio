@@ -92,7 +92,7 @@ public class ParserService {
                                 new BigDecimal(0),
                                 "WARNING. Data inconsistency found. Cash in the terminal was: %d, now: %d "
                                         .formatted(previousTerminalBalance, cashInTerminal),
-                                9_999_999)
+                                0)
 
                 );
             }

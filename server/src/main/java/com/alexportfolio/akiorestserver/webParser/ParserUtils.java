@@ -3,6 +3,7 @@ package com.alexportfolio.akiorestserver.webParser;
 
 import com.alexportfolio.akiorestserver.AkioRestServerApplication;
 import org.openqa.selenium.*;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -46,20 +47,21 @@ public class ParserUtils {
     public Optional<WebElement> getElement(String xpath, WaitType w, Integer... waitTimeSec) {
         Optional<WebElement> element= Optional.empty();
         WebDriverWait newWDriver = wDriver;
-        if (waitTimeSec.length>0) wDriver = new WebDriverWait(driver,Duration.ofSeconds(5));
+        if (waitTimeSec.length>0) newWDriver = new WebDriverWait(driver,Duration.ofSeconds(waitTimeSec[0]));
         for(int i=0; i<2; i++)
             try{
+                driver.getCurrentUrl(); // Throws right Exception if browser is closed
                 element = Optional.of(
                         switch (w) {
                             case PRESENCE ->
-                                wDriver.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
+                                    newWDriver.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
                             case CLICKABLE ->
-                                 wDriver.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+                                    newWDriver.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
                 });
                 break;
-            }catch(TimeoutException | NoElementsException e){
-            //    sleep(100);
-            }catch (NoSuchWindowException e){
+            }catch(TimeoutException e){
+                sleep(1000);
+            }catch (NoSuchWindowException | NoSuchSessionException e){
                 AkioRestServerApplication.getContext().close();
             }
         return element;
@@ -71,9 +73,9 @@ public class ParserUtils {
             try{
                 element = Optional.of(parent.findElement(By.xpath(childXpath)));
                 break;
-            }catch(TimeoutException | NoElementsException e){
+            }catch(NoSuchElementException e){
                 sleep(1000);
-            }catch (NoSuchWindowException e){
+            }catch (NoSuchWindowException | NoSuchSessionException e){
                 AkioRestServerApplication.getContext().close();
             }
         return element;
@@ -85,13 +87,14 @@ public class ParserUtils {
         Optional<List<WebElement>> items = Optional.empty();
         for(int i=0;i<2;i++)
             try{
+                driver.getCurrentUrl(); // Throws right Exception if browser is closed
                 items = Optional.of(wDriver.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(xpath))));
                 if(items.isEmpty()) throw new NoElementsException();
                 break;
             } catch(TimeoutException | NoElementsException e){
                 if(i==1) return Optional.empty();
                 sleep(2000);
-            } catch (NoSuchWindowException e){
+            } catch (NoSuchWindowException | NoSuchSessionException e){
                 AkioRestServerApplication.getContext().close();
             }
         return items;

@@ -15,6 +15,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -31,29 +32,37 @@ public class Parser extends ParserUtils {
     TransactionsService transactionsService;
     WorkScheduleService workScheduleService;
     UsersService usersService;
-
+    Environment env;
     @Value("${parseServiceNames}")
     Boolean parseServiceNames = true;
 
     @Autowired
-    public Parser(TransactionsService transactionsService, WorkScheduleService workScheduleService, UsersService usersService) throws IOException, InterruptedException {
+    public Parser(TransactionsService transactionsService, WorkScheduleService workScheduleService, UsersService usersService, Environment env) throws IOException, InterruptedException {
         this.workScheduleService = workScheduleService;
         this.transactionsService = transactionsService;
         this.usersService = usersService;
+        this.env = env;
     }
 
     public Parser() throws IOException,InterruptedException { }
 
-    public void login(String username, String psw){
-        driver.get("https://cloud.pay-point.com/server/dispatcher/v2/operations.seam");
+    private void login(){
+        // if already logged in - exit
+        if(getElement(xpaths.get("logout_btn"), WaitType.PRESENCE,2).isPresent()) return;
+        driver.get("https://cloud.pay-point.com");
+        String username = env.getProperty("AKIO_SL_USR");
+        String psw = env.getProperty("AKIO_SL_PSW");
         getElement(xpaths.get("input_login"), WaitType.CLICKABLE).ifPresent(el->el.sendKeys(username));
         getElement(xpaths.get("input_psw"), WaitType.CLICKABLE).ifPresent(el->el.sendKeys(psw));
         getElement(xpaths.get("login_btn"), WaitType.CLICKABLE).ifPresent(WebElement::click);
         waitForNewElements();
+        if(getElement(xpaths.get("logout_btn"), WaitType.PRESENCE,5).isEmpty())
+            throw new RuntimeException("Login wasn't successful");
     }
 
 
     public TreeSet<TransactionEnt> getTransactions(LocalDate start, LocalDate end){
+        login(); // in case the session was terminated by the server
         driver.get("https://cloud.pay-point.com/server/dispatcher/v2/operations.seam");
         long days = ChronoUnit.DAYS.between(start, end) ;
         TreeSet<TransactionEnt> allTransactions = new TreeSet<>();
@@ -98,7 +107,7 @@ public class Parser extends ParserUtils {
         // here we iterate over each page
         do{
             var rows = getElements(xpaths.get("table_rows"));
-            if(!rows.isPresent()) break;
+            if(rows.isEmpty()) break;
 
             // these two var's are used for calculating sum of saved transactions on the page
             BigDecimal thisPageTransactionsSum =  new BigDecimal(0);
@@ -233,6 +242,7 @@ public class Parser extends ParserUtils {
     }
 
     public BigDecimal getTotalCashFromTerminal(){
+        login(); // in case the session was terminated by the server
         String cashStr = "";
         for(int i=0; i<5; i++){
             driver.get("https://cloud.pay-point.com/server/monitoring/equipment_statuses3.seam");

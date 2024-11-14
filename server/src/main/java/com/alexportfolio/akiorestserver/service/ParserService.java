@@ -25,18 +25,12 @@ public class ParserService {
     private final TransactionsService transactionsService;
     private final MoneyFlowService moneyService;
     private final Parser parser;
-    private final Environment env;
     private final MoneyContainerService moneyContainerService;
     private final MoneyFlowService moneyFlowService;
     private final MCLogService mcLogService;
     private static final Logger logger = LoggerFactory.getLogger(ParserService.class);
     private static Instant dataInconsistencyMarker;
     private static final int PARSE_STARTING_POINT = 30;
-
-    @PostConstruct
-    void login(){
-        parser.login(env.getProperty("AKIO_SL_USR"), env.getProperty("AKIO_SL_PSW"));
-    }
 
 
     void run(){

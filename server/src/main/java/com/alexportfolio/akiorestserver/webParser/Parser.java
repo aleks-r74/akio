@@ -62,7 +62,7 @@ public class Parser extends ParserUtils {
 
 
     public TreeSet<TransactionEnt> getTransactions(LocalDate start, LocalDate end){
-        login(); // in case the session was terminated by the server
+        login(); // in case the session was terminated by the serve
         driver.get("https://cloud.pay-point.com/server/dispatcher/v2/operations.seam");
         long days = ChronoUnit.DAYS.between(start, end) ;
         TreeSet<TransactionEnt> allTransactions = new TreeSet<>();
@@ -242,9 +242,9 @@ public class Parser extends ParserUtils {
     }
 
     public BigDecimal getTotalCashFromTerminal(){
-        login(); // in case the session was terminated by the server
         String cashStr = "";
         for(int i=0; i<5; i++){
+            login(); // in case the session was terminated by the server
             driver.get("https://cloud.pay-point.com/server/monitoring/equipment_statuses3.seam");
             var cash = getElement(xpaths.get("total_cash_in_terminal"), WaitType.PRESENCE,5);
             cashStr = cash.map(WebElement::getText).orElse("0");

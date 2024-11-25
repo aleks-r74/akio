@@ -1,0 +1,119 @@
+2024-11-25T20:16:02.115+05:00  INFO 14324 --- [akio.server] [restartedMain] c.a.a.AkioRestServerApplication          : Starting AkioRestServerApplication using Java 22.0.1 with PID 14324 (C:\Users\user\Desktop\GitHub\akio\server\target\classes started by user in C:\Users\user\Desktop\GitHub\akio\server)
+2024-11-25T20:16:02.120+05:00  INFO 14324 --- [akio.server] [restartedMain] c.a.a.AkioRestServerApplication          : The following 1 profile is active: "dev"
+2024-11-25T20:16:02.335+05:00  INFO 14324 --- [akio.server] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-11-25T20:16:02.335+05:00  INFO 14324 --- [akio.server] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-11-25T20:16:05.227+05:00  INFO 14324 --- [akio.server] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-11-25T20:16:05.498+05:00  INFO 14324 --- [akio.server] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 255 ms. Found 9 JPA repository interfaces.
+2024-11-25T20:16:08.544+05:00  INFO 14324 --- [akio.server] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8888 (http)
+2024-11-25T20:16:08.578+05:00  INFO 14324 --- [akio.server] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-11-25T20:16:08.579+05:00  INFO 14324 --- [akio.server] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-11-25T20:16:08.705+05:00  INFO 14324 --- [akio.server] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-11-25T20:16:08.706+05:00  INFO 14324 --- [akio.server] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 6369 ms
+2024-11-25T20:16:09.828+05:00  INFO 14324 --- [akio.server] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-11-25T20:16:15.458+05:00  INFO 14324 --- [akio.server] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@f2cf3b4
+2024-11-25T20:16:15.469+05:00  INFO 14324 --- [akio.server] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-11-25T20:16:15.709+05:00  INFO 14324 --- [akio.server] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-11-25T20:16:15.907+05:00  INFO 14324 --- [akio.server] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-11-25T20:16:16.311+05:00  INFO 14324 --- [akio.server] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-11-25T20:16:17.381+05:00  INFO 14324 --- [akio.server] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-11-25T20:16:20.196+05:00  INFO 14324 --- [akio.server] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-11-25T20:16:20.209+05:00  INFO 14324 --- [akio.server] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-11-25T20:16:21.329+05:00  INFO 14324 --- [akio.server] [restartedMain] o.s.s.p.JdbcUserDetailsManager           : No authentication manager set. Reauthentication of users when changing passwords will not be performed.
+2024-11-25T20:16:21.503+05:00  INFO 14324 --- [akio.server] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-11-25T20:16:33.003+05:00  WARN 14324 --- [akio.server] [Thread-4] o.o.selenium.devtools.CdpVersionFinder   : Unable to find CDP implementation matching 131
+2024-11-25T20:16:33.003+05:00  WARN 14324 --- [akio.server] [Thread-4] o.o.selenium.chromium.ChromiumDriver     : Unable to find version of CDP to use for 131.0.2903.63. You may need to include a dependency on a specific version of the CDP using something similar to `org.seleniumhq.selenium:selenium-devtools-v86:4.19.1` where the version ("v86") matches the version of the chromium-based browser you're using and the version number of the artifact is the same as Selenium's.
+2024-11-25T20:16:33.579+05:00  WARN 14324 --- [akio.server] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-11-25T20:16:33.780+05:00  INFO 14324 --- [akio.server] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsManager
+2024-11-25T20:16:36.607+05:00  INFO 14324 --- [akio.server] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-11-25T20:16:36.696+05:00  INFO 14324 --- [akio.server] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8888 (http) with context path '/'
+2024-11-25T20:16:36.727+05:00  INFO 14324 --- [akio.server] [restartedMain] c.a.a.AkioRestServerApplication          : Started AkioRestServerApplication in 36.239 seconds (process running for 38.267)
+2024-11-25T20:21:38.259+05:00  INFO 14324 --- [akio.server] [scheduling-1] c.a.a.service.ParserService              : Exception during parsing
+2024-11-25T20:21:38.260+05:00  WARN 14324 --- [akio.server] [scheduling-1] c.a.a.service.ParserService              : d != java.math.BigDecimal
+2024-11-25T20:24:31.293+05:00  INFO 14324 --- [akio.server] [http-nio-8888-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-11-25T20:24:31.294+05:00  INFO 14324 --- [akio.server] [http-nio-8888-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-11-25T20:24:31.297+05:00  INFO 14324 --- [akio.server] [http-nio-8888-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2024-11-25T20:29:13.585+05:00  WARN 14324 --- [akio.server] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m46s546ms603µs).
+2024-11-25T20:29:13.588+05:00  INFO 14324 --- [akio.server] [scheduling-1] c.a.a.service.ParserService              : Exception during parsing
+2024-11-25T20:29:13.589+05:00  WARN 14324 --- [akio.server] [scheduling-1] c.a.a.service.ParserService              : d != java.math.BigDecimal
+2024-11-25T20:34:23.012+05:00  WARN 14324 --- [akio.server] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m1s152ms746µs600ns).
+2024-11-25T20:36:17.167+05:00  WARN 14324 --- [akio.server] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=52s11ms827µs700ns).
+2024-11-25T20:38:46.294+05:00  WARN 14324 --- [akio.server] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=47s272ms432µs400ns).
+2024-11-25T20:39:11.733+05:00  INFO 14324 --- [akio.server] [scheduling-1] c.a.a.service.ParserService              : Exception during parsing
+2024-11-25T20:39:11.733+05:00  WARN 14324 --- [akio.server] [scheduling-1] c.a.a.service.ParserService              : d != java.math.BigDecimal
+2024-11-25T20:42:58.540+05:00  WARN 14324 --- [akio.server] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m42s215ms294µs100ns).
+2024-11-25T20:46:20.935+05:00  WARN 14324 --- [akio.server] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=52s346ms679µs400ns).
+2024-11-25T20:50:15.052+05:00  WARN 14324 --- [akio.server] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=59s393ms395µs).
+2024-11-25T20:50:15.058+05:00  INFO 14324 --- [akio.server] [scheduling-1] c.a.a.service.ParserService              : Exception during parsing
+2024-11-25T20:50:15.060+05:00  WARN 14324 --- [akio.server] [scheduling-1] c.a.a.service.ParserService              : d != java.math.BigDecimal
+2024-11-25T20:54:45.534+05:00  WARN 14324 --- [akio.server] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m437ms860µs700ns).
+2024-11-25T20:55:19.823+05:00  INFO 14324 --- [akio.server] [scheduling-1] c.a.a.service.ParserService              : Exception during parsing
+2024-11-25T20:55:19.825+05:00  WARN 14324 --- [akio.server] [scheduling-1] c.a.a.service.ParserService              : d != java.math.BigDecimal
+2024-11-25T20:55:20.500+05:00  INFO 14324 --- [akio.server] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-11-25T20:55:20.521+05:00  INFO 14324 --- [akio.server] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-11-25T20:55:20.556+05:00  INFO 14324 --- [akio.server] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-11-25T21:10:11.541+05:00  INFO 9748 --- [akio.server] [restartedMain] c.a.a.AkioRestServerApplication          : Starting AkioRestServerApplication using Java 22.0.1 with PID 9748 (C:\Users\user\Desktop\GitHub\akio\server\target\classes started by user in C:\Users\user\Desktop\GitHub\akio\server)
+2024-11-25T21:10:11.551+05:00  INFO 9748 --- [akio.server] [restartedMain] c.a.a.AkioRestServerApplication          : The following 1 profile is active: "dev"
+2024-11-25T21:10:11.778+05:00  INFO 9748 --- [akio.server] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-11-25T21:10:11.778+05:00  INFO 9748 --- [akio.server] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-11-25T21:10:14.640+05:00  INFO 9748 --- [akio.server] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-11-25T21:10:14.901+05:00  INFO 9748 --- [akio.server] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 243 ms. Found 9 JPA repository interfaces.
+2024-11-25T21:10:18.006+05:00  INFO 9748 --- [akio.server] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8888 (http)
+2024-11-25T21:10:18.043+05:00  INFO 9748 --- [akio.server] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-11-25T21:10:18.044+05:00  INFO 9748 --- [akio.server] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-11-25T21:10:18.194+05:00  INFO 9748 --- [akio.server] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-11-25T21:10:18.194+05:00  INFO 9748 --- [akio.server] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 6416 ms
+2024-11-25T21:10:19.109+05:00  INFO 9748 --- [akio.server] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-11-25T21:10:20.225+05:00  INFO 9748 --- [akio.server] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@29957658
+2024-11-25T21:10:20.230+05:00  INFO 9748 --- [akio.server] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-11-25T21:10:20.378+05:00  INFO 9748 --- [akio.server] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-11-25T21:10:20.675+05:00  INFO 9748 --- [akio.server] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-11-25T21:10:20.863+05:00  INFO 9748 --- [akio.server] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-11-25T21:10:21.923+05:00  INFO 9748 --- [akio.server] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-11-25T21:10:25.278+05:00  INFO 9748 --- [akio.server] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-11-25T21:10:25.283+05:00  INFO 9748 --- [akio.server] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-11-25T21:10:26.559+05:00  INFO 9748 --- [akio.server] [restartedMain] o.s.s.p.JdbcUserDetailsManager           : No authentication manager set. Reauthentication of users when changing passwords will not be performed.
+2024-11-25T21:10:26.712+05:00  INFO 9748 --- [akio.server] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-11-25T21:10:31.165+05:00  WARN 9748 --- [akio.server] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-11-25T21:10:31.336+05:00  INFO 9748 --- [akio.server] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsManager
+2024-11-25T21:10:33.709+05:00  INFO 9748 --- [akio.server] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-11-25T21:10:33.789+05:00  INFO 9748 --- [akio.server] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8888 (http) with context path '/'
+2024-11-25T21:10:33.829+05:00  INFO 9748 --- [akio.server] [restartedMain] c.a.a.AkioRestServerApplication          : Started AkioRestServerApplication in 23.95 seconds (process running for 26.153)
+2024-11-25T21:10:34.010+05:00  INFO 9748 --- [akio.server] [scheduling-1] c.a.a.service.ParserService              : Exception during parsing
+2024-11-25T21:10:34.010+05:00  WARN 9748 --- [akio.server] [scheduling-1] c.a.a.service.ParserService              : Cannot invoke "org.openqa.selenium.WebDriver.getCurrentUrl()" because "this.driver" is null
+2024-11-25T21:10:34.076+05:00  WARN 9748 --- [akio.server] [SpringApplicationShutdownHook] .s.c.a.CommonAnnotationBeanPostProcessor : Destroy method on bean with name 'parser' threw an exception: java.lang.NullPointerException: Cannot invoke "org.openqa.selenium.WebDriver.close()" because "this.driver" is null
+2024-11-25T21:10:34.079+05:00  INFO 9748 --- [akio.server] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-11-25T21:10:34.092+05:00  INFO 9748 --- [akio.server] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-11-25T21:10:34.109+05:00  INFO 9748 --- [akio.server] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-11-25T21:11:40.487+05:00  INFO 13144 --- [akio.server] [restartedMain] c.a.a.AkioRestServerApplication          : Starting AkioRestServerApplication using Java 22.0.1 with PID 13144 (C:\Users\user\Desktop\GitHub\akio\server\target\classes started by user in C:\Users\user\Desktop\GitHub\akio\server)
+2024-11-25T21:11:40.492+05:00  INFO 13144 --- [akio.server] [restartedMain] c.a.a.AkioRestServerApplication          : The following 1 profile is active: "dev"
+2024-11-25T21:11:40.702+05:00  INFO 13144 --- [akio.server] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-11-25T21:11:40.702+05:00  INFO 13144 --- [akio.server] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-11-25T21:11:43.353+05:00  INFO 13144 --- [akio.server] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-11-25T21:11:43.692+05:00  INFO 13144 --- [akio.server] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 310 ms. Found 9 JPA repository interfaces.
+2024-11-25T21:11:46.607+05:00  INFO 13144 --- [akio.server] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8888 (http)
+2024-11-25T21:11:46.645+05:00  INFO 13144 --- [akio.server] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-11-25T21:11:46.646+05:00  INFO 13144 --- [akio.server] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-11-25T21:11:46.798+05:00  INFO 13144 --- [akio.server] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-11-25T21:11:46.799+05:00  INFO 13144 --- [akio.server] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 6095 ms
+2024-11-25T21:11:47.728+05:00  INFO 13144 --- [akio.server] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-11-25T21:11:48.967+05:00  INFO 13144 --- [akio.server] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@683be21c
+2024-11-25T21:11:48.971+05:00  INFO 13144 --- [akio.server] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-11-25T21:11:49.071+05:00  INFO 13144 --- [akio.server] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-11-25T21:11:49.348+05:00  INFO 13144 --- [akio.server] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-11-25T21:11:49.511+05:00  INFO 13144 --- [akio.server] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-11-25T21:11:50.476+05:00  INFO 13144 --- [akio.server] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-11-25T21:11:53.884+05:00  INFO 13144 --- [akio.server] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-11-25T21:11:53.891+05:00  INFO 13144 --- [akio.server] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-11-25T21:11:55.214+05:00  INFO 13144 --- [akio.server] [restartedMain] o.s.s.p.JdbcUserDetailsManager           : No authentication manager set. Reauthentication of users when changing passwords will not be performed.
+2024-11-25T21:11:55.353+05:00  INFO 13144 --- [akio.server] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-11-25T21:12:02.885+05:00  WARN 13144 --- [akio.server] [Thread-4] o.o.selenium.devtools.CdpVersionFinder   : Unable to find CDP implementation matching 131
+2024-11-25T21:12:02.886+05:00  WARN 13144 --- [akio.server] [Thread-4] o.o.selenium.chromium.ChromiumDriver     : Unable to find version of CDP to use for 131.0.2903.63. You may need to include a dependency on a specific version of the CDP using something similar to `org.seleniumhq.selenium:selenium-devtools-v86:4.19.1` where the version ("v86") matches the version of the chromium-based browser you're using and the version number of the artifact is the same as Selenium's.
+2024-11-25T21:12:03.356+05:00  WARN 13144 --- [akio.server] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-11-25T21:12:03.648+05:00  INFO 13144 --- [akio.server] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsManager
+2024-11-25T21:12:06.648+05:00  INFO 13144 --- [akio.server] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-11-25T21:12:06.713+05:00  INFO 13144 --- [akio.server] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8888 (http) with context path '/'
+2024-11-25T21:12:06.760+05:00  INFO 13144 --- [akio.server] [restartedMain] c.a.a.AkioRestServerApplication          : Started AkioRestServerApplication in 27.986 seconds (process running for 29.842)
+2024-11-25T21:15:40.945+05:00  INFO 13144 --- [akio.server] [scheduling-1] c.a.a.service.ParserService              : found 22 new transactions
+2024-11-25T21:17:22.115+05:00  INFO 13144 --- [akio.server] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-11-25T21:17:22.123+05:00  INFO 13144 --- [akio.server] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-11-25T21:17:22.192+05:00  INFO 13144 --- [akio.server] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

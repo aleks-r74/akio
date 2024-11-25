@@ -121,12 +121,13 @@ public class Parser extends ParserUtils {
 
                 String receipt_num$ = transactionRow.findElement(By.xpath(xpaths.get("col_receipt_num"))).getText().strip();
                 Integer receipt_num = Integer.valueOf(receipt_num$);
+                if (receipt_num<0) continue; // this line is introduced to avoid bug in the external payment system
                 // check we have this receipt number parsed, if parsed - skip
                 for(var existentTransaction : existentTransactions) {
                     if(existentTransaction.getReceipt_num() == receipt_num) {
                         // if this is the first time we iterate over this transaction, add its sum to the thisPageTransactionsSum
                         if(!thisPageUniqueReceiptNumbers.contains(receipt_num))
-                            thisPageTransactionsSum = thisPageTransactionsSum.add(existentTransaction.getMoney_accepted());
+                            thisPageTransactionsSum = thisPageTransactionsSum.add(existentTransaction.getMoney_posted());
                         thisPageUniqueReceiptNumbers.add(receipt_num);
                         continue transactionsLoop;
                     }
@@ -148,7 +149,7 @@ public class Parser extends ParserUtils {
                 payment_type = payment_type.contains("Наличные") ? "cash" : "card";
                 // ----------------------
 
-                thisPageTransactionsSum = thisPageTransactionsSum.add(money_accepted);
+                thisPageTransactionsSum = thisPageTransactionsSum.add(money_posted);
 
                 // extract service name
                 String serviceName = "";
@@ -176,12 +177,12 @@ public class Parser extends ParserUtils {
 
             }
             // here we should check that sum of all found transactions equals to the total money accepted in the table
-            String money_accepted_summary = getElement(xpaths.get("total_money_accepted"),WaitType.PRESENCE).get()
+            String totalMoneyForAllServices = getElement(xpaths.get("total_money_for_all_services"),WaitType.PRESENCE).get()
                     .getText()
                     .replaceAll("[^\\d.]", "");
 
-            if(!thisPageTransactionsSum.equals(new BigDecimal(money_accepted_summary)))
-                throw new ParsingException("Parsed sum:%s Total sum:%d".formatted(money_accepted_summary,thisPageTransactionsSum));
+            if(!thisPageTransactionsSum.equals(new BigDecimal(totalMoneyForAllServices)))
+                throw new ParsingException("Parsed sum:%s Total sum:%d".formatted(totalMoneyForAllServices,thisPageTransactionsSum));
 
         } while(goNextPage());
         return foundTransactions.values();

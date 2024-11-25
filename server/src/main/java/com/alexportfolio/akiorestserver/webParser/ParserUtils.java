@@ -5,6 +5,7 @@ import com.alexportfolio.akiorestserver.AkioRestServerApplication;
 import org.openqa.selenium.*;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.remote.UnreachableBrowserException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
@@ -61,7 +62,7 @@ public class ParserUtils {
                 break;
             }catch(TimeoutException e){
                 sleep(1000);
-            }catch (NoSuchWindowException | NoSuchSessionException e){
+            }catch (NoSuchWindowException | NoSuchSessionException | UnreachableBrowserException e){
                 AkioRestServerApplication.getContext().close();
             }
         return element;
@@ -75,7 +76,7 @@ public class ParserUtils {
                 break;
             }catch(NoSuchElementException e){
                 sleep(1000);
-            }catch (NoSuchWindowException | NoSuchSessionException e){
+            }catch (NoSuchWindowException | NoSuchSessionException | UnreachableBrowserException e){
                 AkioRestServerApplication.getContext().close();
             }
         return element;
@@ -94,7 +95,7 @@ public class ParserUtils {
             } catch(TimeoutException | NoElementsException e){
                 if(i==1) return Optional.empty();
                 sleep(2000);
-            } catch (NoSuchWindowException | NoSuchSessionException e){
+            } catch (NoSuchWindowException | NoSuchSessionException | UnreachableBrowserException e){
                 AkioRestServerApplication.getContext().close();
             }
         return items;

@@ -114,7 +114,7 @@ export class MoneyManagementComponent implements OnInit {
       ...this.moneyFlowRequest, 
       from: dates.from,
       to: dates.to,
-      page: this.currentPage - 1
+      page: 0
     }
     this.loadMoneyFlows();
   }

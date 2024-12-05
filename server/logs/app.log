@@ -20,3 +20,16 @@
 2024-12-05T20:56:57.795+05:00  INFO 20268 --- [akio.server] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2024-12-05T20:56:59.601+05:00  INFO 20268 --- [akio.server] [restartedMain] o.s.s.p.JdbcUserDetailsManager           : No authentication manager set. Reauthentication of users when changing passwords will not be performed.
 2024-12-05T20:56:59.928+05:00  INFO 20268 --- [akio.server] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-12-05T20:57:29.718+05:00  WARN 20268 --- [akio.server] [Thread-4] o.o.selenium.devtools.CdpVersionFinder   : Unable to find CDP implementation matching 131
+2024-12-05T20:57:29.719+05:00  WARN 20268 --- [akio.server] [Thread-4] o.o.selenium.chromium.ChromiumDriver     : Unable to find version of CDP to use for 131.0.2903.70. You may need to include a dependency on a specific version of the CDP using something similar to `org.seleniumhq.selenium:selenium-devtools-v86:4.19.1` where the version ("v86") matches the version of the chromium-based browser you're using and the version number of the artifact is the same as Selenium's.
+2024-12-05T20:57:30.135+05:00  WARN 20268 --- [akio.server] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-12-05T20:57:30.428+05:00  INFO 20268 --- [akio.server] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsManager
+2024-12-05T20:57:33.664+05:00  INFO 20268 --- [akio.server] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-12-05T20:57:33.824+05:00  INFO 20268 --- [akio.server] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8888 (http) with context path '/'
+2024-12-05T20:57:33.862+05:00  INFO 20268 --- [akio.server] [restartedMain] c.a.a.AkioRestServerApplication          : Started AkioRestServerApplication in 82.153 seconds (process running for 88.589)
+2024-12-05T20:58:08.724+05:00  INFO 20268 --- [akio.server] [http-nio-8888-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-05T20:58:08.725+05:00  INFO 20268 --- [akio.server] [http-nio-8888-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-12-05T20:58:08.727+05:00  INFO 20268 --- [akio.server] [http-nio-8888-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-12-05T21:59:19.987+05:00  INFO 20268 --- [akio.server] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-12-05T21:59:20.045+05:00  INFO 20268 --- [akio.server] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-12-05T21:59:20.060+05:00  INFO 20268 --- [akio.server] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

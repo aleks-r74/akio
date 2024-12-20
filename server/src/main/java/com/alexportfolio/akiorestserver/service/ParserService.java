@@ -1,10 +1,12 @@
 package com.alexportfolio.akiorestserver.service;
 
+import com.alexportfolio.akiorestserver.AkioRestServerApplication;
 import com.alexportfolio.akiorestserver.repository.entities.MoneyFlowEnt;
 import com.alexportfolio.akiorestserver.repository.entities.TransactionEnt;
 import com.alexportfolio.akiorestserver.webParser.Parser;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
+import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
@@ -48,9 +50,12 @@ public class ParserService {
                 saveFoundTransactions(transactions);
             }
             checkMoneyCollected();
-        } catch (RuntimeException e){
-            logger.info("Exception during parsing");
+        }
+
+        catch (RuntimeException e){
+            logger.info("Exception during parsing: " + e.getClass().getName());
             logger.warn(e.getMessage());
+            AkioRestServerApplication.getContext().close();
         }
 
     }

@@ -62,8 +62,6 @@ public class ParserUtils {
                 break;
             }catch(TimeoutException e){
                 sleep(1000);
-            }catch (NoSuchWindowException | NoSuchSessionException | UnreachableBrowserException e){
-                AkioRestServerApplication.getContext().close();
             }
         return element;
     }
@@ -76,8 +74,6 @@ public class ParserUtils {
                 break;
             }catch(NoSuchElementException e){
                 sleep(1000);
-            }catch (NoSuchWindowException | NoSuchSessionException | UnreachableBrowserException e){
-                AkioRestServerApplication.getContext().close();
             }
         return element;
     }
@@ -95,8 +91,6 @@ public class ParserUtils {
             } catch(TimeoutException | NoElementsException e){
                 if(i==1) return Optional.empty();
                 sleep(2000);
-            } catch (NoSuchWindowException | NoSuchSessionException | UnreachableBrowserException e){
-                AkioRestServerApplication.getContext().close();
             }
         return items;
     }

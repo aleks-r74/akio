@@ -21,24 +21,11 @@ public class AkioRestServerApplication {
 
 	@Getter
     private static ConfigurableApplicationContext context = null;
-	private static ClassLoader mainThreadClassLoader;
 
 	public static void main(String[] args) {
-		mainThreadClassLoader = Thread.currentThread().getContextClassLoader();
 		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Yekaterinburg"));
 		context = SpringApplication.run(AkioRestServerApplication.class, args);
 	}
 
-	// restarts the app. not used in the current version.
-	public static void restart() {
-		ApplicationArguments args = context.getBean(ApplicationArguments.class);
-		Thread thread = new Thread(() -> {
-			context.close();
-			context = SpringApplication.run(AkioRestServerApplication.class, args.getSourceArgs());
-		});
-		thread.setContextClassLoader(mainThreadClassLoader);
-		thread.setDaemon(false);
-		thread.start();
-	}
 
 }

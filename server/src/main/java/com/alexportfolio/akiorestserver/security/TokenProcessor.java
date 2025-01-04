@@ -3,14 +3,18 @@ package com.alexportfolio.akiorestserver.security;
 import com.alexportfolio.akiorestserver.repository.entities.Authority;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -21,10 +25,17 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class TokenProcessor {
-    private static SecretKey privateKey = Jwts.SIG.HS256.key().build();
+    @Value("${jwt.private-key:#{null}}")
+    private String PRIVATE_KEY;
+    SecretKey privateKey = Jwts.SIG.HS256.key().build();
+    @Value("${jwt.ttl:86400}")
+    private int TOKEN_EXP_SEC = 86400;
 
-    @Value("${jwtToken.valid.sec}")
-    public Integer TOKEN_EXP_SEC = 86400;
+    @PostConstruct
+    void init(){
+        if(PRIVATE_KEY!=null && PRIVATE_KEY.length()>=32)
+            privateKey = Keys.hmacShaKeyFor(PRIVATE_KEY.getBytes(StandardCharsets.UTF_8));
+    }
 
     public String generateToken(Authentication authObj) {
         Date currentDate = new Date();
@@ -58,21 +69,11 @@ public class TokenProcessor {
                     .collect(
                             Collectors.toMap(e->(String)e.getKey(), e->(String)e.getValue())
                     );
-            // constructing Authentication object
-            String[] tokenAuthorities = map.get("authorities").split(",");
-            var authorities = strArrToAuthCollection(tokenAuthorities);
-
+            var authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(map.get("authorities"));
             return new AuthenticationObj(map.get("sub"),true, authorities);
         } catch (JwtException e){
             return null;
         }
-    }
-
-    public List<? extends GrantedAuthority> strArrToAuthCollection(String[] authoritiesArr){
-        Function<String,GrantedAuthority> strToAuthority = str-> ()-> str;
-        return Arrays.stream(authoritiesArr)
-                    .map(strToAuthority)
-                    .collect(Collectors.toList());
     }
 
 }

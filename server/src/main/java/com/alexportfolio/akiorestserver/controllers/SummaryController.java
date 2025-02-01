@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.TemporalAdjusters;
 
 @RestController
 @AllArgsConstructor
@@ -21,8 +22,8 @@ public class SummaryController {
     @GetMapping("summary")
     ResponseEntity<SummaryResponseDto> getSummary(@RequestParam("date") String dateStr){
         LocalDate date = LocalDate.parse(dateStr+"-01");
-        var start = LocalDateTime.of(date, LocalTime.of(0,0,0));
-        var end = LocalDateTime.of(date.withDayOfMonth(date.getMonth().maxLength()), LocalTime.of(23,59,59));
+        var start = date.atStartOfDay();
+        var end = date.with(TemporalAdjusters.lastDayOfMonth()).atTime(LocalTime.MAX);
         var summary = summaryService.getSummaray(start, end);
         summary.getSummary().setDate(dateStr);
         return new ResponseEntity<>(summary, HttpStatus.OK);

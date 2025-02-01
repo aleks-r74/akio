@@ -23,7 +23,7 @@ public class SummaryController {
     ResponseEntity<SummaryResponseDto> getSummary(@RequestParam("date") String dateStr){
         LocalDate date = LocalDate.parse(dateStr+"-01");
         var start = date.atStartOfDay();
-        var end = date.with(TemporalAdjusters.lastDayOfMonth()).atTime(LocalTime.MAX);
+        var end = date.with(TemporalAdjusters.lastDayOfMonth()).atTime(LocalTime.of(23,59,59));
         var summary = summaryService.getSummaray(start, end);
         summary.getSummary().setDate(dateStr);
         return new ResponseEntity<>(summary, HttpStatus.OK);

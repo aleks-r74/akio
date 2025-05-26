@@ -111,7 +111,7 @@ public class Parser extends ParserUtils {
 
             // these two var's are used for calculating sum of saved transactions on the page
             BigDecimal thisPageTransactionsSum =  new BigDecimal(0);
-            Set<Integer> thisPageUniqueReceiptNumbers = new HashSet<>();
+            Set<Map.Entry<Integer, LocalDateTime>> thisPageUniqueReceiptNumbers = new HashSet<>();
 
             // here we iterate over each transaction on the page
             transactionsLoop: for(var transactionRow : rows.get()){
@@ -121,20 +121,19 @@ public class Parser extends ParserUtils {
 
                 String receipt_num$ = transactionRow.findElement(By.xpath(xpaths.get("col_receipt_num"))).getText().strip();
                 Integer receipt_num = Integer.valueOf(receipt_num$);
-                if (receipt_num<0) continue; // this line is introduced to avoid bug in the external payment system
+                String op_date$ = transactionRow.findElement(By.xpath(xpaths.get("col_op_date"))).getText().strip();
+                LocalDateTime op_date = LocalDateTime.parse(op_date$, DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
                 // check we have this receipt number parsed, if parsed - skip
                 for(var existentTransaction : existentTransactions) {
-                    if(existentTransaction.getReceipt_num() == receipt_num) {
+                    if(existentTransaction.getReceipt_num() == receipt_num && existentTransaction.getDate_time().equals(op_date)) {
                         // if this is the first time we iterate over this transaction, add its sum to the thisPageTransactionsSum
-                        if(!thisPageUniqueReceiptNumbers.contains(receipt_num))
-                            thisPageTransactionsSum = thisPageTransactionsSum.add(existentTransaction.getMoney_posted());
-                        thisPageUniqueReceiptNumbers.add(receipt_num);
+                        if(!thisPageUniqueReceiptNumbers.contains(Map.entry(receipt_num,op_date)))
+                            thisPageTransactionsSum = thisPageTransactionsSum.add(existentTransaction.getMoney_accepted());
+                        thisPageUniqueReceiptNumbers.add(Map.entry(receipt_num,op_date));
                         continue transactionsLoop;
                     }
                 }
-
                 // raw parsed data
-                String op_date$ = transactionRow.findElement(By.xpath(xpaths.get("col_op_date"))).getText().strip();
                 String op_status$ = transactionRow.findElement(By.xpath(xpaths.get("col_op_status"))).getText().strip();
                 String phone_num = transactionRow.findElement(By.xpath(xpaths.get("col_phone_num"))).getText().strip();
                 String money_accepted$ = transactionRow.findElement(By.xpath(xpaths.get("col_money_accepted"))).getText().strip();
@@ -142,7 +141,6 @@ public class Parser extends ParserUtils {
                 String payment_type = transactionRow.findElement(By.xpath(xpaths.get("col_payment_type"))).getText().strip();
 
                 // type conversion
-                LocalDateTime op_date = LocalDateTime.parse(op_date$, DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
                 Boolean op_status = !op_status$.contains("Ошибка"); // everything that is not Ошибка should be true
                 BigDecimal money_accepted = new BigDecimal(money_accepted$.replaceAll("[^\\d.]",""));
                 BigDecimal money_posted = new BigDecimal(money_posted$.replaceAll("[^\\d.]",""));
@@ -182,7 +180,7 @@ public class Parser extends ParserUtils {
                     .replaceAll("[^\\d.]", "");
 
             if(!thisPageTransactionsSum.equals(new BigDecimal(totalMoneyForAllServices)))
-                throw new ParsingException("Parsed sum:%s Total sum:%d".formatted(totalMoneyForAllServices,thisPageTransactionsSum));
+                throw new ParsingException("Parsed sum:%s Total sum:%s".formatted(totalMoneyForAllServices,thisPageTransactionsSum));
 
         } while(goNextPage());
         return foundTransactions.values();

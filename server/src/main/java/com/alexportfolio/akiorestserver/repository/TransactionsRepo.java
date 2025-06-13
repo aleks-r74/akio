@@ -1,8 +1,10 @@
 package com.alexportfolio.akiorestserver.repository;
 
 import com.alexportfolio.akiorestserver.repository.entities.TransactionEnt;
+import jakarta.persistence.LockModeType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -15,7 +17,7 @@ import java.util.Set;
 
 
 public interface TransactionsRepo extends CrudRepository<TransactionEnt, Long> {
-
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT t FROM TransactionEnt t WHERE t.receipt_num IN :receipt_nums AND t.date_time >= :startDate AND t.date_time <= :endDate")
     Set<TransactionEnt> findByReceiptNumsAndDate(@Param("receipt_nums") List<Integer> receiptNums, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 

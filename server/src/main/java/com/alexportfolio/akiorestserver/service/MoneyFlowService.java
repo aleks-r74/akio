@@ -261,6 +261,7 @@ public class MoneyFlowService {
     }
 
     @Cacheable("moneyflows")
+    @Transactional // required due-to usage of pessimistic lock on query method
     public List<MoneyFlowEnt> getMoneyFlowBetween(LocalDateTime start, LocalDateTime end){
         return moneyFlowRepo.findMoneyFlowEntityBetween(start, end);
     }

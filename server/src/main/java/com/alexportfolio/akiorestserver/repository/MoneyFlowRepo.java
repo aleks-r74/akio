@@ -2,9 +2,11 @@ package com.alexportfolio.akiorestserver.repository;
 
 import com.alexportfolio.akiorestserver.controllers.dto.money.Direction;
 import com.alexportfolio.akiorestserver.repository.entities.MoneyFlowEnt;
+import jakarta.persistence.LockModeType;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -16,7 +18,7 @@ import java.util.Set;
 
 @Repository
 public interface MoneyFlowRepo extends CrudRepository<MoneyFlowEnt, Long> {
-
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT mfe FROM MoneyFlowEnt mfe WHERE mfe.time_stamp >= :start AND mfe.time_stamp <= :end")
     List<MoneyFlowEnt> findMoneyFlowEntityBetween(@Param("start") LocalDateTime start,
                                                   @Param("end") LocalDateTime end);

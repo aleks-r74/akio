@@ -128,7 +128,7 @@ public class Parser extends ParserUtils {
                     if(existentTransaction.getReceipt_num() == receipt_num && existentTransaction.getDate_time().equals(op_date)) {
                         // if this is the first time we iterate over this transaction, add its sum to the thisPageTransactionsSum
                         if(!thisPageUniqueReceiptNumbers.contains(Map.entry(receipt_num,op_date)))
-                            thisPageTransactionsSum = thisPageTransactionsSum.add(existentTransaction.getMoney_accepted());
+                            thisPageTransactionsSum = thisPageTransactionsSum.add(existentTransaction.getMoney_posted());
                         thisPageUniqueReceiptNumbers.add(Map.entry(receipt_num,op_date));
                         continue transactionsLoop;
                     }
